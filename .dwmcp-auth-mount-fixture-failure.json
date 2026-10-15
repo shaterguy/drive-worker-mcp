@@ -1,0 +1,102 @@
+{
+  "phase": "AUTH_MOUNT_FIXTURE_RECOVERY",
+  "workspace": "/data/data/com.termux/files/home/work/drive-worker-mcp",
+  "node": "v24.18.0",
+  "mount_manifest_sha256": "eaffbfc78862a67ef5b5e4d9c6d71ed1bcfac810d7c546973411dfa6cc50f423",
+  "fix_manifest_sha256": "56bf9c1bd19f5969b1710afbc08965c46712e75be66e91afbbe436e15389d7fa",
+  "stages": [
+    {
+      "label": "git_toplevel",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "/data/data/com.termux/files/home/work/drive-worker-mcp\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_branch",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_head",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "d7fbaa01a9cb5979ab3f5432a177842135b8215e\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_origin",
+      "exit_code": 0,
+      "signal": null
+    },
+    {
+      "label": "remote_baseline",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "d7fbaa01a9cb5979ab3f5432a177842135b8215e\trefs/heads/v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "repository_identity",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\"archived\":false,\"default_branch\":\"v0.1.0-dev1\",\"full_name\":\"shaterguy/drive-worker-mcp\",\"id\":1420159339,\"owner\":{\"id\":108107617,\"login\":\"shaterguy\"},\"private\":false}\n",
+      "stderr": ""
+    },
+    {
+      "label": "staged_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "tracked_changes",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "api/index.ts\ntests/auth-config.test.ts\ntests/deployment-boundary.test.ts\nvercel.json\n",
+      "stderr": ""
+    },
+    {
+      "label": "untracked_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": ".dwmcp-auth-mount-failure.json\nMOUNT-HANDOFF.md\nsrc/auth/bootstrap.ts\nsrc/auth/cursor-key.ts\nsrc/auth/deployment.ts\nsrc/auth/schema-readiness.ts\ntests/auth-bootstrap.test.ts\ntests/auth-cursor-key.test.ts\ntests/auth-deployment.test.ts\ntests/auth-schema-readiness.test.ts\ntests/auth-signing-key.test.ts\nverification/auth-mount-before/api/index.ts\nverification/auth-mount-before/tests/auth-config.test.ts\nverification/auth-mount-before/tests/deployment-boundary.test.ts\nverification/auth-mount-before/vercel.json\n",
+      "stderr": ""
+    },
+    {
+      "label": "tests",
+      "exit_code": 1,
+      "signal": null,
+      "stdout": "✔ maintained account create/update hooks never retain provider ID tokens (58.661616ms)\n✔ valid resource or resource plus exact OIDC UserInfo audience accepted (12.685461ms)\n✔ every tool rechecks committed grant and live consent without a cache (1.253769ms)\n✔ subject tenant mismatch and client mismatch fail closed (5.400384ms)\n✔ expired or deleted reference session cannot be bypassed by a missing sid (1.359693ms)\n✔ arbitrary principal and later scope mutation cannot acquire authority (2.369769ms)\n✔ already expired token is rejected before database use (0.946154ms)\n✔ existing usable app token stops when stored Google readiness is lost (4.346461ms)\n✔ first missing refresh and existing-binding partial scopes block issuance before grant insert (3.763077ms)\n✔ same-account preserved stored refresh plus both scopes allows a new session grant (2.599923ms)\n✔ auth context must resolve; immediate rejection is sanitized (8.206692ms)\n✔ auth context timeout rejects safely and consumes a later context rejection (11.017539ms)\n✔ host is operator configured with no request-derived fallback (5.876ms)\n✔ configuration fails closed and does not print secret values in error messages (4.653231ms)\n✔ identity uses issuer and subject, never email (1.594461ms)\n✔ legacy static response helpers never claim OAuth acceptance; mounted health is tested separately (131.047462ms)\n✔ cursor HKDF is deterministic, 32 bytes, and purpose/environment separated (14.143692ms)\n✔ same secret/resource resumes cursors after restart; rotation or another resource rejects them (12.254154ms)\n✔ mount stays 503 without complete configuration and never initializes a database (154.891ms)\n✔ concurrent requests share init; health verifies the database without claiming OAuth acceptance (5.528615ms)\n✔ failed initialization is sanitized, shared, and retried only after cooldown (11.785ms)\n✔ fresh health failure reports database unavailable despite an initialized runtime (1.368693ms)\n✔ synchronous loader failure and missing schema also stay fail-closed and retry after cooldown (14.767923ms)\n✔ mount forwards exact auth/UI requests and preserves OAuth 401/403 challenges and cookies (8.921846ms)\n✔ invalid host/origin is rejected before init, unknown paths do not contact the database (5.939385ms)\n✔ Vercel rewrite reaches every runtime form and keeps the public-only output boundary (29.939077ms)\n✔ verified provider hook rejects either partial Drive grant and missing scope metadata (6.569615ms)\n✔ verified provider hook returns only exact sub and does not require a new refresh response (0.856ms)\n▶ actual maintained MCP authentication preserves 401/403 challenges through the app wrapper\n  ✔ missing and invalid tokens stop before app authority (134.968308ms)\n  ✔ single tool step-up is HTTP 403 with insufficient_scope, never 503 (28.736924ms)\n  ✔ accepted batch format preflights every member before SDK execution (17.117154ms)\n  ✔ granted read scope reaches the request-local executor (19.840616ms)\n✔ actual maintained MCP authentication preserves 401/403 challenges through the app wrapper (260.285154ms)\n✔ request host and browser Origin cannot override the configured origin (152.992385ms)\n✔ body bound is enforced without trusting Content-Length (17.257231ms)\n✔ noStore clones redirect headers and preserves multiple auth cookies (4.699077ms)\n✔ catalog preflight requires the actual generated schema, app tables and enabled revocation triggers (5593.330769ms)\n✖ maintained JWT init creates no key; first JWKS persists an encrypted Ed25519 private key (227.422462ms)\n✔ first maintained signing call also lazy-creates a key when no JWKS request occurred (84.045462ms)\n✔ deployment serves static files only from explicit public output and pins install policy (18.964ms)\n✔ public output contains only the reviewed non-sensitive robots file, with no symlinks (4.271154ms)\n✔ deployment handler denies internal paths and missing configuration; deployed static routing is a separate live gate (153.263693ms)\n✔ Google adapter reserves IDs and creates multipart JSON with that exact ID and parent (130.397231ms)\n✔ Google 409 surfaces as a fixed-ID reconciliation condition, never a new ID (1.811769ms)\n✔ download cap is enforced against actual streamed bytes even when content-length lies (3.024923ms)\n✔ only transient statuses retry and Retry-After is respected without logging upstream bodies (7.624615ms)\n✔ exact-name query handles pagination and preserves duplicates rather than selecting latest (4.967154ms)\n✔ service reconciles a real adapter 409 by exact reserved-ID metadata and body hash (39.084847ms)\nresponseMode: 'json' drops mid-call notifications. subscriptions/listen streams are always served over SSE regardless; other notifications emitted before a result are dropped.\n✔ official SDK negotiates and serves exactly the four tools with fail-closed schema and grant gates (368.099462ms)\n✔ signed cursors reject tampering, tenant binding changes, invalid offsets and UTF-8 midpoints (16.253461ms)\n✔ whole-text redaction prevents credential fragments leaking across page boundaries (2.159ms)\n✔ Postgres schema and adapter preserve tenant keys, reservations, and confirmed states (4203.315ms)\n✔ command normalization is stable across key order and refuses unknown destinations (8.181ms)\n✔ manual publication creates exactly one JSON in the manual folder and never claims execution (6.063384ms)\n✔ direct requires distinct jobs:submit scope and writes only to Commands (2.728308ms)\n✔ concurrent identical requests converge on one Drive file (11.448077ms)\n✔ lost create response reconciles the fixed ID without making a second file (3.055ms)\n✔ DB failure after Drive create preserves the pre-reserved ID for retry (1.925616ms)\n✔ route and body changes conflict and never promote a manual file (0.966077ms)\n✔ same job ID in two accounts has independent bindings and publications (0.736307ms)\n✔ missing, overlapping, and unwritable bindings fail before any publication (2.837539ms)\n✔ status without Result distinguishes manual and direct without mutating files (2.085462ms)\n✔ duplicate Results are an explicit conflict (0.484307ms)\n✔ schema, job ID and publication file mismatch are refused (3.243385ms)\n✔ all Worker statuses and execution uncertainty are retained without inferring success (4.541ms)\n✔ log references must be in bound Results with the exact job and stream name (0.857847ms)\n✔ pagination returns bounded redacted output and rejects a stale cursor (3.509846ms)\n✔ revoked grant and unavailable grant database fail before any Drive access on every tool (1.372077ms)\n✔ Worker routed copy is verified using immutable publication digest without exposing command data (3.716615ms)\n✔ pinned-target publication cannot be converted into a routed copy and origin input is forbidden (0.975154ms)\n✔ cursor is invalid after a provider revision even if sanitized text is identical (2.875154ms)\n✔ an unreadable or missing publication file is never recreated after confirmation (0.518154ms)\n✔ oversized log is rejected before reading when metadata declares its size (0.491923ms)\n✔ log pages omit repeated tails and error text; summary tails have UTF-8 byte limits (7.218462ms)\nℹ tests 74\nℹ suites 0\nℹ pass 73\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 11590.618847\n\n✖ failing tests:\n\ntest at tests/auth-signing-key.test.ts:23:1\n✖ maintained JWT init creates no key; first JWKS persists an encrypted Ed25519 private key (227.422462ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  false !== true\n  \n      at TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/auth-signing-key.test.ts:37:10)\n      at async Test.run (node:internal/test_runner/test:1332:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: false,\n    expected: true,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+      "stderr": ""
+    },
+    {
+      "label": "typecheck",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "build",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "schema_typecheck",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "status": "STOPPED",
+  "user_ready": false,
+  "live_runtime_initialized": false,
+  "blocker": "MOUNT_FIXTURE_VERIFICATION_FAILED_NO_COMMIT"
+}

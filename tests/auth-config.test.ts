@@ -28,7 +28,7 @@ test('identity uses issuer and subject, never email', () => {
   assert.throws(() => canonicalGoogleIdentity('https://accounts.google.com', ''));
 });
 
-test('setup scaffold is live but cannot accidentally claim ready', async () => {
+test('legacy static response helpers never claim OAuth acceptance; mounted health is tested separately', async () => {
   const health = await healthResponse().json();
   assert.equal(health.user_ready, false);
   assert.equal(health.authentication, 'not_ready');

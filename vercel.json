@@ -27,6 +27,10 @@
     {
       "source": "/consent",
       "destination": "/api"
+    },
+    {
+      "source": "/ui/:path*",
+      "destination": "/api"
     }
   ],
   "outputDirectory": "public",

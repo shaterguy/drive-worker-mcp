@@ -40,6 +40,9 @@ export function createAuthOptions(config: AuthConfig, database: NonNullable<Bett
     session: { expiresIn: 7 * 24 * 60 * 60, cookieCache: { enabled: false } },
     // Libraries may include provider response bodies in errors; the app emits code-only errors.
     logger: { disabled: true },
+    // better-call otherwise console.error()s non-APIError failures even with the logger disabled.
+    // Its maintained router still converts APIError to the original status/headers response.
+    onAPIError: { throw: true },
     plugins: [
       genericOAuth({ config: [{
         providerId: 'google',
