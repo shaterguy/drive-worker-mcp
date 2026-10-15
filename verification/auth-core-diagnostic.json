@@ -1,0 +1,148 @@
+{
+  "phase": "AUTH_CORE_IDENTITY_DIAGNOSTIC",
+  "workspace": "/data/data/com.termux/files/home/work/drive-worker-mcp",
+  "node": "v24.18.0",
+  "old_auth_manifest_sha256": "fc907e0411e3ab10449e1f46068e726c95c2d5f90dc116e776da095f642a813a",
+  "stages": [
+    {
+      "label": "git_toplevel",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "/data/data/com.termux/files/home/work/drive-worker-mcp\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_branch",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_head",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "8a9f31df59222db497cccb1748a1e11e54cd94b1\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_origin",
+      "exit_code": 0,
+      "signal": null
+    },
+    {
+      "label": "remote_baseline",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "8a9f31df59222db497cccb1748a1e11e54cd94b1\trefs/heads/v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "repository_identity",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\"archived\":false,\"default_branch\":\"v0.1.0-dev1\",\"full_name\":\"shaterguy/drive-worker-mcp\",\"id\":1420159339,\"owner\":{\"id\":108107617,\"login\":\"shaterguy\"},\"private\":false}\n",
+      "stderr": ""
+    },
+    {
+      "label": "staged_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "modified_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "package-lock.json\npackage.json\n",
+      "stderr": ""
+    },
+    {
+      "label": "untracked_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": ".dwmcp-auth-integration-failure.json\nAUTH-HANDOFF.md\ndependency-additions.json\nscripts/generate-auth-schema.ts\nscripts/schema-config.ts\nsql/auth.sql\nsrc/auth/account-privacy.ts\nsrc/auth/authority.ts\nsrc/auth/better-auth.ts\nsrc/auth/connections.ts\nsrc/auth/google-readiness.ts\nsrc/auth/protected-mcp.ts\nsrc/auth/request-guards.ts\nsrc/auth/runtime.ts\nsrc/auth/ui.ts\ntests/auth-account-privacy.test.ts\ntests/auth-authority.test.ts\ntests/auth-google-readiness.test.ts\ntests/auth-protected-mcp.test.ts\ntests/auth-request-guards.test.ts\ntsconfig.auth-schema.json\nvercel.auth-scaffold.json\nvercel.runtime-candidate.json\nverification/auth-before-package-lock.json\nverification/auth-before-package.json\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_core",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.8\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/core/-/core-1.7.8.tgz\",\n  \"dist.integrity\": \"sha512-gH5CIquPBAMws4/gGKmzU0bevTU+ryQNvhvdc0inj4tW2lIKo4xB2onnAtzaEtvujkePpI2WJCeBtgYUfYUlHg==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "resolve_exact_core",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\nup to date in 1s\n",
+      "stderr": ""
+    },
+    {
+      "label": "install_locked_core",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\nadded 56 packages in 4s\n",
+      "stderr": ""
+    },
+    {
+      "label": "installed_versions",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"0.1.0-dev1\",\n  \"name\": \"drive-worker-mcp\",\n  \"dependencies\": {\n    \"@better-auth/cimd\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/cimd/-/cimd-1.7.8.tgz\",\n      \"overridden\": false\n    },\n    \"@better-auth/core\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/core/-/core-1.7.8.tgz\",\n      \"overridden\": false\n    },\n    \"@better-auth/mcp\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/mcp/-/mcp-1.7.8.tgz\",\n      \"overridden\": false\n    },\n    \"@better-auth/oauth-provider\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/oauth-provider/-/oauth-provider-1.7.8.tgz\",\n      \"overridden\": false\n    },\n    \"@electric-sql/pglite\": {\n      \"version\": \"0.5.10\",\n      \"resolved\": \"https://registry.npmjs.org/@electric-sql/pglite/-/pglite-0.5.10.tgz\",\n      \"overridden\": false\n    },\n    \"@modelcontextprotocol/client\": {\n      \"version\": \"2.3.1\",\n      \"resolved\": \"https://registry.npmjs.org/@modelcontextprotocol/client/-/client-2.3.1.tgz\",\n      \"overridden\": false\n    },\n    \"@modelcontextprotocol/server\": {\n      \"version\": \"2.3.1\",\n      \"resolved\": \"https://registry.npmjs.org/@modelcontextprotocol/server/-/server-2.3.1.tgz\",\n      \"overridden\": false\n    },\n    \"@types/node\": {\n      \"version\": \"24.19.2\",\n      \"resolved\": \"https://registry.npmjs.org/@types/node/-/node-24.19.2.tgz\",\n      \"overridden\": false\n    },\n    \"@types/pg\": {\n      \"version\": \"8.23.1\",\n      \"resolved\": \"https://registry.npmjs.org/@types/pg/-/pg-8.23.1.tgz\",\n      \"overridden\": false\n    },\n    \"better-auth\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/better-auth/-/better-auth-1.7.8.tgz\",\n      \"overridden\": false\n    },\n    \"kysely\": {\n      \"version\": \"0.29.6\",\n      \"resolved\": \"https://registry.npmjs.org/kysely/-/kysely-0.29.6.tgz\",\n      \"overridden\": false\n    },\n    \"pg\": {\n      \"version\": \"8.23.1\",\n      \"resolved\": \"https://registry.npmjs.org/pg/-/pg-8.23.1.tgz\",\n      \"overridden\": false\n    },\n    \"typescript\": {\n      \"version\": \"6.0.3\",\n      \"resolved\": \"https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz\",\n      \"overridden\": false\n    },\n    \"zod\": {\n      \"version\": \"4.6.7\",\n      \"resolved\": \"https://registry.npmjs.org/zod/-/zod-4.6.7.tgz\",\n      \"overridden\": false\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "installed_core_tree",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"0.1.0-dev1\",\n  \"name\": \"drive-worker-mcp\",\n  \"dependencies\": {\n    \"@better-auth/cimd\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/cimd/-/cimd-1.7.8.tgz\",\n      \"overridden\": false,\n      \"dependencies\": {\n        \"@better-auth/core\": {\n          \"version\": \"1.7.8\"\n        }\n      }\n    },\n    \"@better-auth/core\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/core/-/core-1.7.8.tgz\",\n      \"overridden\": false\n    },\n    \"@better-auth/mcp\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/mcp/-/mcp-1.7.8.tgz\",\n      \"overridden\": false,\n      \"dependencies\": {\n        \"@better-auth/core\": {\n          \"version\": \"1.7.8\"\n        }\n      }\n    },\n    \"@better-auth/oauth-provider\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/oauth-provider/-/oauth-provider-1.7.8.tgz\",\n      \"overridden\": false,\n      \"dependencies\": {\n        \"@better-auth/core\": {\n          \"version\": \"1.7.8\"\n        }\n      }\n    },\n    \"better-auth\": {\n      \"version\": \"1.7.8\",\n      \"resolved\": \"https://registry.npmjs.org/better-auth/-/better-auth-1.7.8.tgz\",\n      \"overridden\": false,\n      \"dependencies\": {\n        \"@better-auth/core\": {\n          \"version\": \"1.7.8\"\n        },\n        \"@better-auth/drizzle-adapter\": {\n          \"version\": \"1.7.8\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/drizzle-adapter/-/drizzle-adapter-1.7.8.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.8\"\n            }\n          }\n        },\n        \"@better-auth/kysely-adapter\": {\n          \"version\": \"1.7.8\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/kysely-adapter/-/kysely-adapter-1.7.8.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.8\"\n            }\n          }\n        },\n        \"@better-auth/memory-adapter\": {\n          \"version\": \"1.7.8\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/memory-adapter/-/memory-adapter-1.7.8.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.8\"\n            }\n          }\n        },\n        \"@better-auth/mongo-adapter\": {\n          \"version\": \"1.7.8\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/mongo-adapter/-/mongo-adapter-1.7.8.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.8\"\n            }\n          }\n        },\n        \"@better-auth/prisma-adapter\": {\n          \"version\": \"1.7.8\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/prisma-adapter/-/prisma-adapter-1.7.8.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.8\"\n            }\n          }\n        },\n        \"@better-auth/telemetry\": {\n          \"version\": \"1.7.8\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/telemetry/-/telemetry-1.7.8.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.8\"\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "typecheck",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "schema_typecheck",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "unchanged_local_head",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "8a9f31df59222db497cccb1748a1e11e54cd94b1\n",
+      "stderr": ""
+    },
+    {
+      "label": "unchanged_remote_head",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "8a9f31df59222db497cccb1748a1e11e54cd94b1\trefs/heads/v0.1.0-dev1\n",
+      "stderr": ""
+    }
+  ],
+  "status": "CORE_ALIGNMENT_TYPECHECK_PASS_DIAGNOSTIC_ONLY",
+  "user_ready": false,
+  "runtime_mounted": false,
+  "repository_id": 1420159339,
+  "repository_visibility": "public",
+  "lock_sha256": "bac9775f085bd69abd12fea8042fbf3338cf99f762c8927b9f5107553f1e3a00",
+  "core_paths": [
+    "node_modules/@better-auth/core"
+  ],
+  "source_unchanged": true,
+  "tests_rerun": false,
+  "schema_generated": false,
+  "commit_created": false,
+  "remote_pushed": false,
+  "baseline_head": "8a9f31df59222db497cccb1748a1e11e54cd94b1",
+  "remote_sha": "8a9f31df59222db497cccb1748a1e11e54cd94b1"
+}

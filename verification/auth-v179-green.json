@@ -1,0 +1,265 @@
+{
+  "phase": "AUTH_V179_CANDIDATE_INTEGRATION",
+  "workspace": "/data/data/com.termux/files/home/work/drive-worker-mcp",
+  "node": "v24.18.0",
+  "auth_manifest_sha256": "f0ffd67ba747b430cc189aac9a0e07b679b8635b5789115d6a00c73fbdfff34d",
+  "stages": [
+    {
+      "label": "git_toplevel",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "/data/data/com.termux/files/home/work/drive-worker-mcp\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_branch",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_head",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "8a9f31df59222db497cccb1748a1e11e54cd94b1\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_origin",
+      "exit_code": 0,
+      "signal": null
+    },
+    {
+      "label": "remote_baseline",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "8a9f31df59222db497cccb1748a1e11e54cd94b1\trefs/heads/v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "repository_identity",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\"archived\":false,\"default_branch\":\"v0.1.0-dev1\",\"full_name\":\"shaterguy/drive-worker-mcp\",\"id\":1420159339,\"owner\":{\"id\":108107617,\"login\":\"shaterguy\"},\"private\":false}\n",
+      "stderr": ""
+    },
+    {
+      "label": "staged_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "modified_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "package-lock.json\npackage.json\n",
+      "stderr": ""
+    },
+    {
+      "label": "untracked_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": ".dwmcp-auth-integration-failure.json\nAUTH-HANDOFF.md\ndependency-additions.json\nscripts/generate-auth-schema.ts\nscripts/schema-config.ts\nsql/auth.sql\nsrc/auth/account-privacy.ts\nsrc/auth/authority.ts\nsrc/auth/better-auth.ts\nsrc/auth/connections.ts\nsrc/auth/google-readiness.ts\nsrc/auth/protected-mcp.ts\nsrc/auth/request-guards.ts\nsrc/auth/runtime.ts\nsrc/auth/ui.ts\ntests/auth-account-privacy.test.ts\ntests/auth-authority.test.ts\ntests/auth-google-readiness.test.ts\ntests/auth-protected-mcp.test.ts\ntests/auth-request-guards.test.ts\ntsconfig.auth-schema.json\nvercel.auth-scaffold.json\nvercel.runtime-candidate.json\nverification/auth-before-package-lock.json\nverification/auth-before-package.json\nverification/auth-core-before-package-lock.json\nverification/auth-core-before-package.json\nverification/auth-core-diagnostic.json\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_better-auth",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/better-auth/-/better-auth-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-qJ+s5GxLKalCKzABtIFzhI9V5IWJ3vuTKnklU+bwIqzs08BZSeIVoli/py8UpCn2vbKmQ6d8i7mMPiqoc3z0+w==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/core",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/core/-/core-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-ZwkJRJOG0NkSoLudyDdy7PZUjpMxj5T5/AtNN6axJCwCXMEWYF1IX36yJJC2T0hIvrm/ORngDHd5QXh9DRRm2A==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/cimd",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/cimd/-/cimd-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-6kIlOO68nwCEDxpbYqsA2sy3AWtO37t6gS4zasufvclOsIPYyXVERukScRGk8PrJjsr76pcq6t7KUuGa7E3JGg==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/mcp",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/mcp/-/mcp-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-GF2Elz5V+Ch8C56CNM/FYw8447CdJIMbJPhc/SunOAF9XUs70x7DzwIuYUPVOxTXaZDpf1FoqNQaV9GJtOmSog==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/oauth-provider",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/oauth-provider/-/oauth-provider-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-cA6+7wPP3WIjHoQ15Sof5Ju4YFroQigfuk+kbJxIQpIp8U+kYK8mYGkI2WECnERIvxcu4bG3jOnGE5e0hyPE+A==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/drizzle-adapter",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/drizzle-adapter/-/drizzle-adapter-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-pjKw09MM/RftcSLIPuvW9Xz7PlMoKZE9tXEbnNqsv2cqZQvEJKrCPSYi32d3CCIWj7509Kccll1v0AyV8K05GQ==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/kysely-adapter",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/kysely-adapter/-/kysely-adapter-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-e5pHavuUGIFTgboE7/j7dxq4HVkbuEOdLo2y3KZCeH5RjDdiYt7gReqq001kyHJSKwxv6xLIjgpoVZq/tirFpA==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/memory-adapter",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/memory-adapter/-/memory-adapter-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-UoPx/V4Ddj/fjlILXRfcQNXutHWqoKqrC2z8jHqvCrfdwpytxIrp+A1CcG3vXjZWHIynLK34+AcIjvwMEQLNwg==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/mongo-adapter",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/mongo-adapter/-/mongo-adapter-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-gEqaFxOW5QUZswgPdBL/JqunhruTF6wG1xbPilNXyVd8ZpbeMstyDewuLmTgOeI20M6zEWC4b7BURVU91Gg7+A==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/prisma-adapter",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/prisma-adapter/-/prisma-adapter-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-L/6Bq1hLjBhexUa4JSk7pDYNDuGksuiedWYnyvJc0alzdYavk0pAWvWWt/WI3DvblBr6YUIbgr3HqeHvVueUrA==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry_@better-auth/telemetry",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"1.7.9\",\n  \"dist.tarball\": \"https://registry.npmjs.org/@better-auth/telemetry/-/telemetry-1.7.9.tgz\",\n  \"dist.integrity\": \"sha512-OaHj8vM6rQYrdONCiPMMyUHGIx3BaEUNfHHXEmpukcZFboAWfRYTRm0GVt+O8Sz3+rgIUBWiY+/H7SehCFA3dQ==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "resolve_auth_179_lock",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\nup to date in 5s\n",
+      "stderr": ""
+    },
+    {
+      "label": "install_locked_auth_179",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\nadded 56 packages in 4s\n",
+      "stderr": ""
+    },
+    {
+      "label": "installed_versions",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"0.1.0-dev1\",\n  \"name\": \"drive-worker-mcp\",\n  \"dependencies\": {\n    \"@better-auth/cimd\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/cimd/-/cimd-1.7.9.tgz\",\n      \"overridden\": false\n    },\n    \"@better-auth/core\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/core/-/core-1.7.9.tgz\",\n      \"overridden\": false\n    },\n    \"@better-auth/mcp\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/mcp/-/mcp-1.7.9.tgz\",\n      \"overridden\": false\n    },\n    \"@better-auth/oauth-provider\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/oauth-provider/-/oauth-provider-1.7.9.tgz\",\n      \"overridden\": false\n    },\n    \"@electric-sql/pglite\": {\n      \"version\": \"0.5.10\",\n      \"resolved\": \"https://registry.npmjs.org/@electric-sql/pglite/-/pglite-0.5.10.tgz\",\n      \"overridden\": false\n    },\n    \"@modelcontextprotocol/client\": {\n      \"version\": \"2.3.1\",\n      \"resolved\": \"https://registry.npmjs.org/@modelcontextprotocol/client/-/client-2.3.1.tgz\",\n      \"overridden\": false\n    },\n    \"@modelcontextprotocol/server\": {\n      \"version\": \"2.3.1\",\n      \"resolved\": \"https://registry.npmjs.org/@modelcontextprotocol/server/-/server-2.3.1.tgz\",\n      \"overridden\": false\n    },\n    \"@types/node\": {\n      \"version\": \"24.19.2\",\n      \"resolved\": \"https://registry.npmjs.org/@types/node/-/node-24.19.2.tgz\",\n      \"overridden\": false\n    },\n    \"@types/pg\": {\n      \"version\": \"8.23.1\",\n      \"resolved\": \"https://registry.npmjs.org/@types/pg/-/pg-8.23.1.tgz\",\n      \"overridden\": false\n    },\n    \"better-auth\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/better-auth/-/better-auth-1.7.9.tgz\",\n      \"overridden\": false\n    },\n    \"kysely\": {\n      \"version\": \"0.29.6\",\n      \"resolved\": \"https://registry.npmjs.org/kysely/-/kysely-0.29.6.tgz\",\n      \"overridden\": false\n    },\n    \"pg\": {\n      \"version\": \"8.23.1\",\n      \"resolved\": \"https://registry.npmjs.org/pg/-/pg-8.23.1.tgz\",\n      \"overridden\": false\n    },\n    \"typescript\": {\n      \"version\": \"6.0.3\",\n      \"resolved\": \"https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz\",\n      \"overridden\": false\n    },\n    \"zod\": {\n      \"version\": \"4.6.7\",\n      \"resolved\": \"https://registry.npmjs.org/zod/-/zod-4.6.7.tgz\",\n      \"overridden\": false\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "installed_core_tree",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"0.1.0-dev1\",\n  \"name\": \"drive-worker-mcp\",\n  \"dependencies\": {\n    \"@better-auth/cimd\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/cimd/-/cimd-1.7.9.tgz\",\n      \"overridden\": false,\n      \"dependencies\": {\n        \"@better-auth/core\": {\n          \"version\": \"1.7.9\"\n        }\n      }\n    },\n    \"@better-auth/core\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/core/-/core-1.7.9.tgz\",\n      \"overridden\": false\n    },\n    \"@better-auth/mcp\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/mcp/-/mcp-1.7.9.tgz\",\n      \"overridden\": false,\n      \"dependencies\": {\n        \"@better-auth/core\": {\n          \"version\": \"1.7.9\"\n        }\n      }\n    },\n    \"@better-auth/oauth-provider\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/@better-auth/oauth-provider/-/oauth-provider-1.7.9.tgz\",\n      \"overridden\": false,\n      \"dependencies\": {\n        \"@better-auth/core\": {\n          \"version\": \"1.7.9\"\n        }\n      }\n    },\n    \"better-auth\": {\n      \"version\": \"1.7.9\",\n      \"resolved\": \"https://registry.npmjs.org/better-auth/-/better-auth-1.7.9.tgz\",\n      \"overridden\": false,\n      \"dependencies\": {\n        \"@better-auth/core\": {\n          \"version\": \"1.7.9\"\n        },\n        \"@better-auth/drizzle-adapter\": {\n          \"version\": \"1.7.9\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/drizzle-adapter/-/drizzle-adapter-1.7.9.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.9\"\n            }\n          }\n        },\n        \"@better-auth/kysely-adapter\": {\n          \"version\": \"1.7.9\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/kysely-adapter/-/kysely-adapter-1.7.9.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.9\"\n            }\n          }\n        },\n        \"@better-auth/memory-adapter\": {\n          \"version\": \"1.7.9\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/memory-adapter/-/memory-adapter-1.7.9.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.9\"\n            }\n          }\n        },\n        \"@better-auth/mongo-adapter\": {\n          \"version\": \"1.7.9\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/mongo-adapter/-/mongo-adapter-1.7.9.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.9\"\n            }\n          }\n        },\n        \"@better-auth/prisma-adapter\": {\n          \"version\": \"1.7.9\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/prisma-adapter/-/prisma-adapter-1.7.9.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.9\"\n            }\n          }\n        },\n        \"@better-auth/telemetry\": {\n          \"version\": \"1.7.9\",\n          \"resolved\": \"https://registry.npmjs.org/@better-auth/telemetry/-/telemetry-1.7.9.tgz\",\n          \"overridden\": false,\n          \"dependencies\": {\n            \"@better-auth/core\": {\n              \"version\": \"1.7.9\"\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "tests",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\n> drive-worker-mcp@0.1.0-dev1 test\n> node --test tests/*.test.ts\n\n✔ maintained account create/update hooks never retain provider ID tokens (55.820846ms)\n✔ valid resource or resource plus exact OIDC UserInfo audience accepted (11.157846ms)\n✔ every tool rechecks committed grant and live consent without a cache (0.942462ms)\n✔ subject tenant mismatch and client mismatch fail closed (0.532846ms)\n✔ expired or deleted reference session cannot be bypassed by a missing sid (0.609231ms)\n✔ arbitrary principal and later scope mutation cannot acquire authority (0.727385ms)\n✔ already expired token is rejected before database use (0.572ms)\n✔ existing usable app token stops when stored Google readiness is lost (3.448385ms)\n✔ first missing refresh and existing-binding partial scopes block issuance before grant insert (2.958154ms)\n✔ same-account preserved stored refresh plus both scopes allows a new session grant (0.532308ms)\n✔ host is operator configured with no request-derived fallback (5.128923ms)\n✔ configuration fails closed and does not print secret values in error messages (7.259385ms)\n✔ identity uses issuer and subject, never email (1.32923ms)\n✔ setup scaffold is live but cannot accidentally claim ready (120.595693ms)\n✔ verified provider hook rejects either partial Drive grant and missing scope metadata (6.065231ms)\n✔ verified provider hook returns only exact sub and does not require a new refresh response (0.823923ms)\n▶ actual maintained MCP authentication preserves 401/403 challenges through the app wrapper\n  ✔ missing and invalid tokens stop before app authority (140.67477ms)\n  ✔ single tool step-up is HTTP 403 with insufficient_scope, never 503 (24.269769ms)\n  ✔ accepted batch format preflights every member before SDK execution (11.891461ms)\n  ✔ granted read scope reaches the request-local executor (15.493154ms)\n✔ actual maintained MCP authentication preserves 401/403 challenges through the app wrapper (246.726154ms)\n✔ request host and browser Origin cannot override the configured origin (121.829769ms)\n✔ body bound is enforced without trusting Content-Length (18.159923ms)\n✔ noStore clones redirect headers and preserves multiple auth cookies (3.815923ms)\n✔ deployment serves static files only from explicit public output and pins install policy (15.521308ms)\n✔ public output contains only the reviewed non-sensitive robots file, with no symlinks (3.803308ms)\n✔ scaffold handler denies internal paths and keeps auth unavailable; deployed static routing is a separate live gate (128.617846ms)\n✔ Google adapter reserves IDs and creates multipart JSON with that exact ID and parent (122.04ms)\n✔ Google 409 surfaces as a fixed-ID reconciliation condition, never a new ID (1.700923ms)\n✔ download cap is enforced against actual streamed bytes even when content-length lies (3.259154ms)\n✔ only transient statuses retry and Retry-After is respected without logging upstream bodies (6.472923ms)\n✔ exact-name query handles pagination and preserves duplicates rather than selecting latest (3.971154ms)\n✔ service reconciles a real adapter 409 by exact reserved-ID metadata and body hash (23.821616ms)\nresponseMode: 'json' drops mid-call notifications. subscriptions/listen streams are always served over SSE regardless; other notifications emitted before a result are dropped.\n✔ official SDK negotiates and serves exactly the four tools with fail-closed schema and grant gates (289.237923ms)\n✔ signed cursors reject tampering, tenant binding changes, invalid offsets and UTF-8 midpoints (7.445ms)\n✔ whole-text redaction prevents credential fragments leaking across page boundaries (2.2ms)\n✔ Postgres schema and adapter preserve tenant keys, reservations, and confirmed states (3805.013001ms)\n✔ command normalization is stable across key order and refuses unknown destinations (8.135077ms)\n✔ manual publication creates exactly one JSON in the manual folder and never claims execution (6.583462ms)\n✔ direct requires distinct jobs:submit scope and writes only to Commands (2.683385ms)\n✔ concurrent identical requests converge on one Drive file (9.257461ms)\n✔ lost create response reconciles the fixed ID without making a second file (1.922539ms)\n✔ DB failure after Drive create preserves the pre-reserved ID for retry (2.077231ms)\n✔ route and body changes conflict and never promote a manual file (1.244308ms)\n✔ same job ID in two accounts has independent bindings and publications (0.728385ms)\n✔ missing, overlapping, and unwritable bindings fail before any publication (1.689924ms)\n✔ status without Result distinguishes manual and direct without mutating files (2.037846ms)\n✔ duplicate Results are an explicit conflict (0.608847ms)\n✔ schema, job ID and publication file mismatch are refused (1.459308ms)\n✔ all Worker statuses and execution uncertainty are retained without inferring success (3.680384ms)\n✔ log references must be in bound Results with the exact job and stream name (0.822462ms)\n✔ pagination returns bounded redacted output and rejects a stale cursor (3.692615ms)\n✔ revoked grant and unavailable grant database fail before any Drive access on every tool (0.924923ms)\n✔ Worker routed copy is verified using immutable publication digest without exposing command data (3.672ms)\n✔ pinned-target publication cannot be converted into a routed copy and origin input is forbidden (1.179154ms)\n✔ cursor is invalid after a provider revision even if sanitized text is identical (2.820615ms)\n✔ an unreadable or missing publication file is never recreated after confirmation (0.536ms)\n✔ oversized log is rejected before reading when metadata declares its size (0.750461ms)\n✔ log pages omit repeated tails and error text; summary tails have UTF-8 byte limits (7.312ms)\nℹ tests 59\nℹ suites 0\nℹ pass 59\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 6568.509231\n",
+      "stderr": ""
+    },
+    {
+      "label": "typecheck",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\n> drive-worker-mcp@0.1.0-dev1 typecheck\n> tsc --noEmit\n\n",
+      "stderr": ""
+    },
+    {
+      "label": "build",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\n> drive-worker-mcp@0.1.0-dev1 build\n> tsc\n\n",
+      "stderr": ""
+    },
+    {
+      "label": "schema_typecheck",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "generate_local_schema",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\"status\":\"LOCAL_SCHEMA_ONLY_PASS\",\"sql\":\"/data/data/com.termux/files/home/work/drive-worker-mcp/sql/generated/better-auth-1.7.9.sql\",\"report\":\"/data/data/com.termux/files/home/work/drive-worker-mcp/sql/generated/schema-report.json\",\"sha256\":\"39ff3f160e36a47f65bb369c74973e005d2782e542952a86195143243e0882a4\",\"user_ready\":false}\n",
+      "stderr": ""
+    }
+  ],
+  "status": "VERIFIED_UNMOUNTED_AUTH_179_CANDIDATE",
+  "user_ready": false,
+  "runtime_mounted": false,
+  "repository_id": 1420159339,
+  "repository_visibility": "public",
+  "lock_sha256": "3ee18e1d89d38d56ebe4b9c87876dc4b53ef5740dedf8e7604a79f67ac503223",
+  "core_paths": [
+    "node_modules/@better-auth/core"
+  ],
+  "source_sha256": {
+    ".dwmcp-auth-integration-failure.json": "5a7693450f3edb7ad76c86d7e8f4d6312f494367988091b0baf6ec3dc84f8f9c",
+    "AUTH-HANDOFF.md": "a90294831746c51de32db64294b12bacd5a4a77ed3ca1b629698330b9b8aabec",
+    "api/index.ts": "8dbd9466cd402c32b784bbe1d7d37177e31bae45b9ee787446f49198fb31b908",
+    "dependency-additions.json": "4228bcf1689094063c8e681e20e12a348b0b9c0121e616490d87173f96e138d5",
+    "package-lock.json": "3ee18e1d89d38d56ebe4b9c87876dc4b53ef5740dedf8e7604a79f67ac503223",
+    "package.json": "7bae6b5d5a575ed82367712e40bda34b88958e4bec7efe25e8a779ec38b50e1f",
+    "scripts/generate-auth-schema.ts": "ae7aeee91f21e6a1a005b3c9ecf56210a01468148713634ca835dbb18e73c536",
+    "scripts/schema-config.ts": "c762db662a380db464b749bd54fc92d753ca53a412e8f09e7f40fa501843aa81",
+    "sql/auth.sql": "d82c1d9f9b0e3c066322f83fea83956e619c6c75d2e9a8163d3733fd30d82210",
+    "sql/generated/better-auth-1.7.9.sql": "39ff3f160e36a47f65bb369c74973e005d2782e542952a86195143243e0882a4",
+    "sql/generated/schema-report.json": "45f31cb8f265c7bb1d86dbd454872e2d4416404b5538c8bddfbecb601d9184a7",
+    "src/auth/account-privacy.ts": "40bea2c0b00f5ed7b8bb58dee882ff6236025c3c3989b60d8022660c026cd49a",
+    "src/auth/authority.ts": "ba796538f9710673d4e75892d6f13c1f87204c11aa16084811b6672a159785dc",
+    "src/auth/better-auth.ts": "115b457c92ba491494dd31f579b2418786b65336a2ccf6242a02f32ef6df23cb",
+    "src/auth/config.ts": "efdd77c7ef3e7dec0b79191c8110a4297925d227e019aa79781c9728a0757f5d",
+    "src/auth/connections.ts": "246d8ae0e93b4bd454b1fa45dd672dcff04fc8cf262da15075a2b408421ff73c",
+    "src/auth/google-readiness.ts": "df6fe861c95f143be7a59750caca6ed24b2ad875a683a13e4b9849aa3d9a4222",
+    "src/auth/health.ts": "6aff780b0151b2a15f8b452ba2020c9454cd026b97229e2c9ed56bed7f3bce85",
+    "src/auth/protected-mcp.ts": "4869e4728c0ba494ebfb1cfa9dd9c9e97fdda8f39129c6b4c507196a7b66bca2",
+    "src/auth/request-guards.ts": "5439a1b478afb3cb833bf53baafd8a24f747971fd72f44d16f0caa3bc361d75d",
+    "src/auth/runtime.ts": "5412ca475e0ef091b866027de170095c7aaadceb6a541e966998019c53fbf54c",
+    "src/auth/ui.ts": "19060d26538a12b72002ee6823f56b5e0ad4ed9fc57b1a0da31b9a19900926d3",
+    "tests/auth-account-privacy.test.ts": "a52138ed15c21b034a545d481dbc1ba6ac9e89a21cec548682d6620a75aef1d7",
+    "tests/auth-authority.test.ts": "561b82229d1cb2de317c58b4ec803f1a0ed1a33a0c34cf8bcf5d6d270e25b458",
+    "tests/auth-config.test.ts": "f2a18313ff63f63cf5454eb28df28bdeb09dd738cd7fd9f3c23fc14afb826738",
+    "tests/auth-google-readiness.test.ts": "f8d394996a0c4194ccb5fd84d6375d98163d8de1cc4429209fff1e9af0334f36",
+    "tests/auth-protected-mcp.test.ts": "86da81278184201d4d31431978c11cfcd5c13d3c203d9147dfb0035e7016aeb9",
+    "tests/auth-request-guards.test.ts": "63ed2bc33bf4fb17d78958a9eebf789235bea2d4dd4e7ecb4e9c317fbfb264d0",
+    "tsconfig.auth-schema.json": "65701cf264207734baf8d6b63204ec7762540b480f7d0133308a0bd2ef577ffb",
+    "vercel.auth-scaffold.json": "6d326cfd9151c1c0ce53f742a5975f98545a48e2c5767396d91083c7b3cb2342",
+    "vercel.json": "1a44baf34e767820a567ccf8b7c90c871f9ee13816d4372a25cd3a66ec14a437",
+    "vercel.runtime-candidate.json": "98a73ba4d3594699be6080c37d97046d25134668ae3e248aacf4749b20e7d2b5",
+    "verification/auth-before-package-lock.json": "ae1e2cf935e1ff8f1b6348782f2513d083c29d51c416559e6a96f77d7f0ba78a",
+    "verification/auth-before-package.json": "e54bd612e025c256aa989463e8d0afe7c53d3822a021b98aa11d60c922df633a",
+    "verification/auth-core-before-package-lock.json": "8288c4bf5c6bc0f5dd9530621f547f54af364a7bd305887f384aa24aad2f38e5",
+    "verification/auth-core-before-package.json": "d510493197626283df107da39bcf691af7f274591c5e830944fa2e56bdf93b9a",
+    "verification/auth-core-diagnostic.json": "23079cf3dab8f136101db5512c18c662c829b218995c5669501cc529e624b921",
+    "verification/auth-v179-before/AUTH-HANDOFF.md": "df94d98da7eb23f307886d037f7125b1c60c22ffeccaf2a0c3cdc201b54adb32",
+    "verification/auth-v179-before/dependency-additions.json": "76bf356d33bdcf5f551d0542f0ff98b989a66b3ecf2d13c8c7ec12100c23e733",
+    "verification/auth-v179-before/package-lock.json": "bac9775f085bd69abd12fea8042fbf3338cf99f762c8927b9f5107553f1e3a00",
+    "verification/auth-v179-before/package.json": "ab8632cdf96e4bbe4f0d918d559725df82f879a1e3147162b8ba97586b6a6f6a",
+    "verification/auth-v179-before/scripts/generate-auth-schema.ts": "56b0b47079b23b14f195a85b3f74d7a27912ffa4b7f2da9523783b251f898db7",
+    "verification/auth-v179-before/sql/auth.sql": "e0a906ef2c84018fd5171d960810e02c460f0cfda9a981ca52a9949d90db28be"
+  },
+  "picker_included": false,
+  "oauth_scope_expanded": false
+}

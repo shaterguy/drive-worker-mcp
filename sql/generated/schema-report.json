@@ -1,0 +1,1508 @@
+{
+  "status": "LOCAL_SCHEMA_ONLY_PASS",
+  "node": "24.18.0",
+  "versions": {
+    "better-auth": "1.7.9",
+    "@better-auth/core": "1.7.9",
+    "@better-auth/mcp": "1.7.9",
+    "@better-auth/cimd": "1.7.9",
+    "@better-auth/oauth-provider": "1.7.9",
+    "kysely": "0.29.6",
+    "@electric-sql/pglite": "0.5.10",
+    "typescript": "6.0.3"
+  },
+  "database": "isolated-in-memory-pglite",
+  "production_database_contacted": false,
+  "auth_context_started": false,
+  "better_auth_sql_sha256": "39ff3f160e36a47f65bb369c74973e005d2782e542952a86195143243e0882a4",
+  "app_auth_sql_sha256": "d82c1d9f9b0e3c066322f83fea83956e619c6c75d2e9a8163d3733fd30d82210",
+  "core_sql_sha256": "fc72bc7f66edbaf3668488d5032d886d9c25aaa4bd13a29e4da7b4d4d91e2e72",
+  "official_roundtrip_empty": true,
+  "app_ddl_applied_locally": true,
+  "tableNames": [
+    "account",
+    "jwks",
+    "oauthAccessToken",
+    "oauthClient",
+    "oauthClientAssertion",
+    "oauthClientResource",
+    "oauthConsent",
+    "oauthRefreshToken",
+    "oauthResource",
+    "session",
+    "user",
+    "verification"
+  ],
+  "authColumns": [
+    {
+      "table_name": "account",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "account",
+      "column_name": "accountId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "account",
+      "column_name": "providerId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "account",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "account",
+      "column_name": "accessToken",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "account",
+      "column_name": "refreshToken",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "account",
+      "column_name": "idToken",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "account",
+      "column_name": "accessTokenExpiresAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "account",
+      "column_name": "refreshTokenExpiresAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "account",
+      "column_name": "scope",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "account",
+      "column_name": "password",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "account",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "account",
+      "column_name": "updatedAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "jwks",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "jwks",
+      "column_name": "publicKey",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "jwks",
+      "column_name": "privateKey",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "jwks",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "jwks",
+      "column_name": "expiresAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "jwks",
+      "column_name": "alg",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "jwks",
+      "column_name": "crv",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "token",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "clientId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "sessionId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "referenceId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "authorizationCodeId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "resources",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "requestedUserInfoClaims",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "refreshId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "expiresAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "revoked",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "confirmation",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "column_name": "scopes",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "clientId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "clientSecret",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "clientDiscoveryId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "disabled",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "skipConsent",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "enableEndSession",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "subjectType",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "scopes",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "clientCredentialsScopes",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "updatedAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "uri",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "icon",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "contacts",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "tos",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "policy",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "softwareId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "softwareVersion",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "softwareStatement",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "redirectUris",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "postLogoutRedirectUris",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "backchannelLogoutUri",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "backchannelLogoutSessionRequired",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "tokenEndpointAuthMethod",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "applicationType",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "jwks",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "jwksUri",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "grantTypes",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "responseTypes",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "requirePKCE",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "dpopBoundAccessTokens",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "referenceId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClient",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClientAssertion",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthClientAssertion",
+      "column_name": "expiresAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "column_name": "clientId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "column_name": "resourceId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthConsent",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthConsent",
+      "column_name": "clientId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthConsent",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthConsent",
+      "column_name": "referenceId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthConsent",
+      "column_name": "resources",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthConsent",
+      "column_name": "requestedUserInfoClaims",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthConsent",
+      "column_name": "scopes",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthConsent",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthConsent",
+      "column_name": "updatedAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "token",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "clientId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "sessionId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "referenceId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "authorizationCodeId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "resources",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "requestedUserInfoClaims",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "expiresAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "revoked",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "rotatedAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "rotationReplayResponse",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "rotationReplayExpiresAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "authTime",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "confirmation",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "column_name": "scopes",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "identifier",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "accessTokenTtl",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "refreshTokenTtl",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "signingAlgorithm",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "signingKeyId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "allowedScopes",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "customClaims",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "dpopBoundAccessTokensRequired",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "disabled",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "updatedAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "policyVersion",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "oauthResource",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "session",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "session",
+      "column_name": "expiresAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "session",
+      "column_name": "token",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "session",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "session",
+      "column_name": "updatedAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "session",
+      "column_name": "ipAddress",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "session",
+      "column_name": "userAgent",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "session",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "user",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "user",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "user",
+      "column_name": "email",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "user",
+      "column_name": "emailVerified",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "user",
+      "column_name": "image",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES"
+    },
+    {
+      "table_name": "user",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "user",
+      "column_name": "updatedAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "verification",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "verification",
+      "column_name": "identifier",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "verification",
+      "column_name": "value",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "verification",
+      "column_name": "expiresAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "verification",
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    },
+    {
+      "table_name": "verification",
+      "column_name": "updatedAt",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO"
+    }
+  ],
+  "authConstraints": [
+    {
+      "table_name": "account",
+      "conname": "account_accountId_not_null",
+      "definition": "NOT NULL \"accountId\""
+    },
+    {
+      "table_name": "account",
+      "conname": "account_createdAt_not_null",
+      "definition": "NOT NULL \"createdAt\""
+    },
+    {
+      "table_name": "account",
+      "conname": "account_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "account",
+      "conname": "account_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "account",
+      "conname": "account_providerId_not_null",
+      "definition": "NOT NULL \"providerId\""
+    },
+    {
+      "table_name": "account",
+      "conname": "account_updatedAt_not_null",
+      "definition": "NOT NULL \"updatedAt\""
+    },
+    {
+      "table_name": "account",
+      "conname": "account_userId_fkey",
+      "definition": "FOREIGN KEY (\"userId\") REFERENCES \"user\"(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "account",
+      "conname": "account_userId_not_null",
+      "definition": "NOT NULL \"userId\""
+    },
+    {
+      "table_name": "jwks",
+      "conname": "jwks_createdAt_not_null",
+      "definition": "NOT NULL \"createdAt\""
+    },
+    {
+      "table_name": "jwks",
+      "conname": "jwks_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "jwks",
+      "conname": "jwks_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "jwks",
+      "conname": "jwks_privateKey_not_null",
+      "definition": "NOT NULL \"privateKey\""
+    },
+    {
+      "table_name": "jwks",
+      "conname": "jwks_publicKey_not_null",
+      "definition": "NOT NULL \"publicKey\""
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_clientId_fkey",
+      "definition": "FOREIGN KEY (\"clientId\") REFERENCES \"oauthClient\"(\"clientId\") ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_clientId_not_null",
+      "definition": "NOT NULL \"clientId\""
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_createdAt_not_null",
+      "definition": "NOT NULL \"createdAt\""
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_expiresAt_not_null",
+      "definition": "NOT NULL \"expiresAt\""
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_refreshId_fkey",
+      "definition": "FOREIGN KEY (\"refreshId\") REFERENCES \"oauthRefreshToken\"(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_scopes_not_null",
+      "definition": "NOT NULL scopes"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_sessionId_fkey",
+      "definition": "FOREIGN KEY (\"sessionId\") REFERENCES session(id) ON DELETE SET NULL"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_token_key",
+      "definition": "UNIQUE (token)"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_token_not_null",
+      "definition": "NOT NULL token"
+    },
+    {
+      "table_name": "oauthAccessToken",
+      "conname": "oauthAccessToken_userId_fkey",
+      "definition": "FOREIGN KEY (\"userId\") REFERENCES \"user\"(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthClient",
+      "conname": "oauthClient_clientId_key",
+      "definition": "UNIQUE (\"clientId\")"
+    },
+    {
+      "table_name": "oauthClient",
+      "conname": "oauthClient_clientId_not_null",
+      "definition": "NOT NULL \"clientId\""
+    },
+    {
+      "table_name": "oauthClient",
+      "conname": "oauthClient_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "oauthClient",
+      "conname": "oauthClient_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "oauthClient",
+      "conname": "oauthClient_redirectUris_not_null",
+      "definition": "NOT NULL \"redirectUris\""
+    },
+    {
+      "table_name": "oauthClient",
+      "conname": "oauthClient_userId_fkey",
+      "definition": "FOREIGN KEY (\"userId\") REFERENCES \"user\"(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthClientAssertion",
+      "conname": "oauthClientAssertion_expiresAt_not_null",
+      "definition": "NOT NULL \"expiresAt\""
+    },
+    {
+      "table_name": "oauthClientAssertion",
+      "conname": "oauthClientAssertion_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "oauthClientAssertion",
+      "conname": "oauthClientAssertion_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "conname": "oauthClientResource_clientId_fkey",
+      "definition": "FOREIGN KEY (\"clientId\") REFERENCES \"oauthClient\"(\"clientId\") ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "conname": "oauthClientResource_clientId_not_null",
+      "definition": "NOT NULL \"clientId\""
+    },
+    {
+      "table_name": "oauthClientResource",
+      "conname": "oauthClientResource_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "conname": "oauthClientResource_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "conname": "oauthClientResource_resourceId_fkey",
+      "definition": "FOREIGN KEY (\"resourceId\") REFERENCES \"oauthResource\"(identifier) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthClientResource",
+      "conname": "oauthClientResource_resourceId_not_null",
+      "definition": "NOT NULL \"resourceId\""
+    },
+    {
+      "table_name": "oauthConsent",
+      "conname": "oauthConsent_clientId_fkey",
+      "definition": "FOREIGN KEY (\"clientId\") REFERENCES \"oauthClient\"(\"clientId\") ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthConsent",
+      "conname": "oauthConsent_clientId_not_null",
+      "definition": "NOT NULL \"clientId\""
+    },
+    {
+      "table_name": "oauthConsent",
+      "conname": "oauthConsent_createdAt_not_null",
+      "definition": "NOT NULL \"createdAt\""
+    },
+    {
+      "table_name": "oauthConsent",
+      "conname": "oauthConsent_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "oauthConsent",
+      "conname": "oauthConsent_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "oauthConsent",
+      "conname": "oauthConsent_scopes_not_null",
+      "definition": "NOT NULL scopes"
+    },
+    {
+      "table_name": "oauthConsent",
+      "conname": "oauthConsent_updatedAt_not_null",
+      "definition": "NOT NULL \"updatedAt\""
+    },
+    {
+      "table_name": "oauthConsent",
+      "conname": "oauthConsent_userId_fkey",
+      "definition": "FOREIGN KEY (\"userId\") REFERENCES \"user\"(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_clientId_fkey",
+      "definition": "FOREIGN KEY (\"clientId\") REFERENCES \"oauthClient\"(\"clientId\") ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_clientId_not_null",
+      "definition": "NOT NULL \"clientId\""
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_createdAt_not_null",
+      "definition": "NOT NULL \"createdAt\""
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_expiresAt_not_null",
+      "definition": "NOT NULL \"expiresAt\""
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_scopes_not_null",
+      "definition": "NOT NULL scopes"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_sessionId_fkey",
+      "definition": "FOREIGN KEY (\"sessionId\") REFERENCES session(id) ON DELETE SET NULL"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_token_key",
+      "definition": "UNIQUE (token)"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_token_not_null",
+      "definition": "NOT NULL token"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_userId_fkey",
+      "definition": "FOREIGN KEY (\"userId\") REFERENCES \"user\"(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "conname": "oauthRefreshToken_userId_not_null",
+      "definition": "NOT NULL \"userId\""
+    },
+    {
+      "table_name": "oauthResource",
+      "conname": "oauthResource_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "oauthResource",
+      "conname": "oauthResource_identifier_key",
+      "definition": "UNIQUE (identifier)"
+    },
+    {
+      "table_name": "oauthResource",
+      "conname": "oauthResource_identifier_not_null",
+      "definition": "NOT NULL identifier"
+    },
+    {
+      "table_name": "oauthResource",
+      "conname": "oauthResource_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "oauthResource",
+      "conname": "oauthResource_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "session",
+      "conname": "session_createdAt_not_null",
+      "definition": "NOT NULL \"createdAt\""
+    },
+    {
+      "table_name": "session",
+      "conname": "session_expiresAt_not_null",
+      "definition": "NOT NULL \"expiresAt\""
+    },
+    {
+      "table_name": "session",
+      "conname": "session_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "session",
+      "conname": "session_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "session",
+      "conname": "session_token_key",
+      "definition": "UNIQUE (token)"
+    },
+    {
+      "table_name": "session",
+      "conname": "session_token_not_null",
+      "definition": "NOT NULL token"
+    },
+    {
+      "table_name": "session",
+      "conname": "session_updatedAt_not_null",
+      "definition": "NOT NULL \"updatedAt\""
+    },
+    {
+      "table_name": "session",
+      "conname": "session_userId_fkey",
+      "definition": "FOREIGN KEY (\"userId\") REFERENCES \"user\"(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "session",
+      "conname": "session_userId_not_null",
+      "definition": "NOT NULL \"userId\""
+    },
+    {
+      "table_name": "user",
+      "conname": "user_createdAt_not_null",
+      "definition": "NOT NULL \"createdAt\""
+    },
+    {
+      "table_name": "user",
+      "conname": "user_emailVerified_not_null",
+      "definition": "NOT NULL \"emailVerified\""
+    },
+    {
+      "table_name": "user",
+      "conname": "user_email_key",
+      "definition": "UNIQUE (email)"
+    },
+    {
+      "table_name": "user",
+      "conname": "user_email_not_null",
+      "definition": "NOT NULL email"
+    },
+    {
+      "table_name": "user",
+      "conname": "user_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "user",
+      "conname": "user_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "user",
+      "conname": "user_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "user",
+      "conname": "user_updatedAt_not_null",
+      "definition": "NOT NULL \"updatedAt\""
+    },
+    {
+      "table_name": "verification",
+      "conname": "verification_createdAt_not_null",
+      "definition": "NOT NULL \"createdAt\""
+    },
+    {
+      "table_name": "verification",
+      "conname": "verification_expiresAt_not_null",
+      "definition": "NOT NULL \"expiresAt\""
+    },
+    {
+      "table_name": "verification",
+      "conname": "verification_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "verification",
+      "conname": "verification_identifier_not_null",
+      "definition": "NOT NULL identifier"
+    },
+    {
+      "table_name": "verification",
+      "conname": "verification_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "verification",
+      "conname": "verification_updatedAt_not_null",
+      "definition": "NOT NULL \"updatedAt\""
+    },
+    {
+      "table_name": "verification",
+      "conname": "verification_value_not_null",
+      "definition": "NOT NULL value"
+    }
+  ],
+  "triggers": [
+    {
+      "table_name": "dw_mcp_grants",
+      "tgname": "dw_mcp_grant_immutable_update",
+      "definition": "CREATE TRIGGER dw_mcp_grant_immutable_update BEFORE DELETE OR UPDATE ON public.dw_mcp_grants FOR EACH ROW EXECUTE FUNCTION dw_mcp_grant_immutable()"
+    },
+    {
+      "table_name": "oauthConsent",
+      "tgname": "dw_mcp_consent_delete",
+      "definition": "CREATE TRIGGER dw_mcp_consent_delete AFTER DELETE ON public.\"oauthConsent\" FOR EACH ROW EXECUTE FUNCTION dw_mcp_consent_revoked()"
+    },
+    {
+      "table_name": "oauthConsent",
+      "tgname": "dw_mcp_consent_update",
+      "definition": "CREATE TRIGGER dw_mcp_consent_update AFTER UPDATE ON public.\"oauthConsent\" FOR EACH ROW EXECUTE FUNCTION dw_mcp_consent_reduced()"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "tgname": "dw_mcp_refresh_delete",
+      "definition": "CREATE TRIGGER dw_mcp_refresh_delete AFTER DELETE ON public.\"oauthRefreshToken\" FOR EACH ROW EXECUTE FUNCTION dw_mcp_refresh_revoked()"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "tgname": "dw_mcp_refresh_insert",
+      "definition": "CREATE TRIGGER dw_mcp_refresh_insert BEFORE INSERT ON public.\"oauthRefreshToken\" FOR EACH ROW EXECUTE FUNCTION dw_mcp_reject_revoked_refresh()"
+    },
+    {
+      "table_name": "oauthRefreshToken",
+      "tgname": "dw_mcp_refresh_revoke",
+      "definition": "CREATE TRIGGER dw_mcp_refresh_revoke AFTER UPDATE OF revoked ON public.\"oauthRefreshToken\" FOR EACH ROW EXECUTE FUNCTION dw_mcp_refresh_revoked()"
+    }
+  ],
+  "two_connection_race_tested": false,
+  "google_oauth_tested": false,
+  "chatgpt_compatibility_tested": false,
+  "user_ready": false
+}

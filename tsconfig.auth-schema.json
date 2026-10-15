@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": ["src/**/*.ts", "tests/**/*.ts", "api/**/*.ts", "scripts/schema-config.ts", "scripts/generate-auth-schema.ts"]
+}

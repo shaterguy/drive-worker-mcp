@@ -1,0 +1,13 @@
+{
+  "outputDirectory": "public",
+  "installCommand": "npm ci --ignore-scripts --no-audit --no-fund --registry https://registry.npmjs.org",
+  "rewrites": [
+    { "source": "/health", "destination": "/api" },
+    { "source": "/mcp", "destination": "/api" },
+    { "source": "/api/auth/:path*", "destination": "/api" },
+    { "source": "/.well-known/:path*", "destination": "/api" },
+    { "source": "/sign-in", "destination": "/api" },
+    { "source": "/connect", "destination": "/api" },
+    { "source": "/consent", "destination": "/api" }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "better-auth": "1.7.8",
+    "@better-auth/mcp": "1.7.8",
+    "@better-auth/cimd": "1.7.8",
+    "@better-auth/oauth-provider": "1.7.8"
+  },
+  "devDependencies": { "kysely": "0.29.6" },
+  "shared_existing_dependencies": { "pg": "8.23.1" },
+  "shared_existing_devDependencies": { "@electric-sql/pglite": "0.5.10", "typescript": "6.0.3" },
+  "note": "oauth-provider is imported for public helpers only. mcp() is the sole provider plugin. No second oauthProvider() plugin. Verify kysely@0.29.6 in actual registry/lock before the schema packet; PGlite is development-only and does not replace production pg."
+}
