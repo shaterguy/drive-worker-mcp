@@ -31,7 +31,8 @@ export async function loadRuntime(config: AuthConfig): Promise<MountedRuntime> {
     databaseReady = true;
     const runtime = createRuntime(config, pool, deriveCursorKey(config));
     await awaitAuthContext(runtime.auth.$context);
-    return { fetch: request => runtime.fetch(request), checkDatabase: () => assertSchemaPresent(pool) };
+    return { fetch: (request,diagnostic) => runtime.fetch(request,diagnostic), checkDatabase: () => assertSchemaPresent(pool),
+      poolCounts: () => ({total:pool.totalCount,idle:pool.idleCount,waiting:pool.waitingCount}) };
   } catch {
     await pool.end().catch(() => { /* Code-only failure above; never log a DB URL. */ });
     throw new AuthBoundaryError(databaseReady ? 'AUTH_UNAVAILABLE' : 'AUTH_DATABASE_NOT_READY');

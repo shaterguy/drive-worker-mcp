@@ -26,7 +26,7 @@ async function result(call: () => Promise<unknown>) {
   catch (error) { return { isError: true, content: [{ type: 'text' as const, text: JSON.stringify({ error: safeError(error) }) }] }; }
 }
 export function createMcpServer(service: DriveWorkerService, principal: Principal) {
-  const server = new McpServer({ name: 'drive-worker-mcp', version: '0.1.0-dev1' });
+  const server = new McpServer({ name: 'drive-worker-mcp', version: '0.1.0-dev2' });
   server.registerTool('publish_manual_command', {
     description: 'Publish a command JSON only to your bound manual folder. Does not execute or move it. job_id must contain MANUAL. Requires manual:publish.',
     inputSchema: commandSchema,

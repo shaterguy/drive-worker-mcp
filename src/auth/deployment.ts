@@ -1,14 +1,17 @@
 import { AuthBoundaryError, GOOGLE_CALLBACK_PATH, loadAuthConfig, type AuthConfig } from './config.ts';
 import { assertRequestOrigin, noStore } from './request-guards.ts';
+import { beginRequestDiagnostics, type DiagnosticOptions, type PoolCounts, type RequestDiagnostics } from './request-diagnostics.ts';
 
 export interface MountedRuntime {
-  fetch(request: Request): Promise<Response>;
+  fetch(request: Request, diagnostic?: RequestDiagnostics): Promise<Response>;
+  poolCounts?: () => PoolCounts;
   checkDatabase(): Promise<void>;
 }
 interface DeploymentOptions {
   environment: () => Readonly<Record<string, string | undefined>>;
   load: (config: AuthConfig) => Promise<MountedRuntime>;
   now?: () => number;
+  diagnostics?: DiagnosticOptions;
 }
 const RETRY_MS = 30_000;
 
@@ -39,7 +42,7 @@ export function createDeployment(options: DeploymentOptions) {
     return pending;
   }
 
-  return { async fetch(request: Request): Promise<Response> {
+  async function handle(request: Request, diagnostic: RequestDiagnostics | undefined): Promise<Response> {
     const path = new URL(request.url).pathname;
     const health = path === '/health';
     if (health && request.method !== 'GET') return noStore(new Response(null, { status: 405, headers: { Allow: 'GET' } }));
@@ -53,7 +56,9 @@ export function createDeployment(options: DeploymentOptions) {
       const config = loadAuthConfig(options.environment());
       configured = true;
       assertRequestOrigin(request, config);
+      diagnostic?.markPhase('runtime_init');
       const active = await runtime(config);
+      diagnostic?.setPoolReader(active.poolCounts);
       if (health) {
         try { await active.checkDatabase(); database = 'schema_present'; }
         catch { database = 'unavailable'; throw new AuthBoundaryError('AUTH_UNAVAILABLE'); }
@@ -62,7 +67,7 @@ export function createDeployment(options: DeploymentOptions) {
           google_callback_path: GOOGLE_CALLBACK_PATH }));
       }
       // Preserve the maintained OAuth wrapper's 401/403 responses and challenge headers.
-      return noStore(await active.fetch(request));
+      return noStore(await active.fetch(request,diagnostic));
     } catch (error) {
       const code = error instanceof AuthBoundaryError ? error.code : 'AUTH_UNAVAILABLE';
       if (code === 'INVALID_HOST' || code === 'INVALID_ORIGIN') {
@@ -74,5 +79,11 @@ export function createDeployment(options: DeploymentOptions) {
         google_callback_path: GOOGLE_CALLBACK_PATH }, { status: 503 }));
       return noStore(Response.json({ error: 'AUTH_NOT_READY' }, { status: 503 }));
     }
+  }
+  return { async fetch(request: Request): Promise<Response> {
+    const diagnostic=beginRequestDiagnostics(new URL(request.url).pathname,options.diagnostics);
+    let status=503;
+    try { const response=await handle(request,diagnostic);status=response.status;return response; }
+    finally { diagnostic?.finish(status); }
   } };
 }

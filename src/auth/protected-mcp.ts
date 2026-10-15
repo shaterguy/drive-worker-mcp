@@ -7,12 +7,15 @@ import type { PostgresAuthAuthority } from './authority.ts';
 import type { Principal } from '../contracts.ts';
 import { TOOL_REQUIRED_SCOPE } from '../mcp.ts';
 import { AuthBoundaryError, TOOL_SCOPES, type AuthConfig } from './config.ts';
+import type { RequestDiagnostics } from './request-diagnostics.ts';
 import { assertRequestOrigin, boundedRequest, noStore } from './request-guards.ts';
 
 export function protectMcpRoute(auth: DriveWorkerAuth, config: AuthConfig, authority: PostgresAuthAuthority,
   execute: (request: Request, principal: Principal) => Promise<Response>) {
-  const authenticated = requireMcpAuth(auth, async (request, claims) => {
-    const principal = await authority.principalFromVerifiedClaims(claims);
+  const authenticated = (input: Request, diagnostic: RequestDiagnostics | undefined) => requireMcpAuth(auth, async (request, claims) => {
+    diagnostic?.markPhase('principal');
+    const principal = await authority.principalFromVerifiedClaims(claims,diagnostic);
+    diagnostic?.markPhase('scope_preflight');
     let message: unknown;
     try { message = await request.clone().json(); } catch { /* SDK emits the protocol parse error. */ }
     const missing = new Set<string>();
@@ -26,14 +29,18 @@ export function protectMcpRoute(auth: DriveWorkerAuth, config: AuthConfig, autho
       }
     }
     if (missing.size) throw createInsufficientScopeError([...missing]);
+    diagnostic?.markPhase('sdk_dispatch');
     return execute(request, principal);
-  }, { issuer: config.issuer, resource: config.resource, jwksUrl: `${config.issuer}/jwks`, challengeScopes: TOOL_SCOPES });
-  return async (request: Request): Promise<Response> => {
+  }, { issuer: config.issuer, resource: config.resource, jwksUrl: `${config.issuer}/jwks`, challengeScopes: TOOL_SCOPES })(input);
+  return async (request: Request, diagnostic?: RequestDiagnostics): Promise<Response> => {
     try {
+      diagnostic?.markPhase('boundary');
       assertRequestOrigin(request, config);
       if (request.method !== 'POST') return noStore(new Response(null, { status: 405, headers: { Allow: 'POST' } }));
       if (new URL(request.url).pathname !== '/mcp') return noStore(Response.json({ error: 'NOT_FOUND' }, { status: 404 }));
-      return noStore(await authenticated(await boundedRequest(request)));
+      const bounded=await boundedRequest(request);
+      diagnostic?.markPhase('token_verification');
+      return noStore(await authenticated(bounded,diagnostic));
     } catch (error) {
       if (!(error instanceof AuthBoundaryError)) return noStore(Response.json({ error: 'AUTH_UNAVAILABLE' }, { status: 503 }));
       if (['INVALID_HOST','INVALID_ORIGIN','INVALID_REQUEST','REQUEST_TOO_LARGE'].includes(error.code)) {

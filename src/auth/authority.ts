@@ -3,6 +3,7 @@ import type { Pool, PoolClient } from 'pg';
 import type { Principal, ToolScope } from '../contracts.ts';
 import { AuthBoundaryError, GOOGLE_ISSUER, TOOL_SCOPES, canonicalGoogleIdentity } from './config.ts';
 import { hasRequiredDriveScopes } from './google-readiness.ts';
+import { observePrincipalRead, type RequestDiagnostics } from './request-diagnostics.ts';
 
 export const TENANT_CLAIM = 'urn:drive-worker-mcp:tenant';
 export const GRANT_CLAIM = 'urn:drive-worker-mcp:grant';
@@ -137,7 +138,7 @@ export class PostgresAuthAuthority {
   }
 
   /** Claims MUST already have passed requireMcpAuth's signature/issuer/resource/expiry/DPoP checks. */
-  async principalFromVerifiedClaims(claims: Record<string, unknown>): Promise<Principal> {
+  async principalFromVerifiedClaims(claims: Record<string, unknown>, diagnostic?: RequestDiagnostics): Promise<Principal> {
     const accountId = text(claims[TENANT_CLAIM]);
     const grantId = text(claims[GRANT_CLAIM]);
     const referenceId = text(claims[REFERENCE_CLAIM]);
@@ -156,25 +157,30 @@ export class PostgresAuthAuthority {
       if (proof.sessionId !== referenceId) throw new AuthBoundaryError('AUTH_REQUIRED');
     }
     this.#proofs.set(principal, proof);
-    await this.assertActiveGrant(principal);
+    await this.assertActiveGrant(principal,diagnostic);
     return principal;
   }
 
   /** Called at the route boundary AND immediately before every individual tool. No cache. */
-  async assertActiveGrant(principal: Principal): Promise<void> {
+  async assertActiveGrant(principal: Principal, diagnostic?: RequestDiagnostics): Promise<void> {
     const proof = this.#proofs.get(principal);
     if (!proof || proof.expiresAt <= Date.now()) throw new AuthBoundaryError('AUTH_REQUIRED');
     if (principal.scopes.size !== proof.scopes.length || !proof.scopes.every(scope => principal.scopes.has(scope))) {
       throw new AuthBoundaryError('AUTH_REQUIRED');
     }
-    const tenant = await this.tenantForId(principal.accountId);
-    if (tenant.better_auth_user_id !== proof.userId) throw new AuthBoundaryError('AUTH_REQUIRED');
-    await this.#requireGoogleGrant(this.#pool,tenant);
-    const grants = await this.#pool.query<Grant>(
-      `SELECT * FROM dw_mcp_grants WHERE id=$1 AND tenant_id=$2 AND client_id=$3 AND reference_id=$4 AND revoked_at IS NULL`,
-      [principal.grantId,principal.accountId,principal.clientId,proof.referenceId]);
-    if (grants.rows.length !== 1) throw new AuthBoundaryError('AUTH_REQUIRED');
-    await this.#requireConsent(this.#pool,proof.userId,principal.clientId,proof.referenceId,proof.scopes);
-    await this.#requireSession(this.#pool,proof.userId,proof.referenceId);
+    const tenant = await observePrincipalRead(diagnostic,'tenant',async()=>{
+      const value=await this.tenantForId(principal.accountId);
+      if (value.better_auth_user_id !== proof.userId) throw new AuthBoundaryError('AUTH_REQUIRED');
+      return value;
+    });
+    await observePrincipalRead(diagnostic,'google_ready',()=>this.#requireGoogleGrant(this.#pool,tenant));
+    await observePrincipalRead(diagnostic,'grant',async()=>{
+      const grants = await this.#pool.query<Grant>(
+        `SELECT * FROM dw_mcp_grants WHERE id=$1 AND tenant_id=$2 AND client_id=$3 AND reference_id=$4 AND revoked_at IS NULL`,
+        [principal.grantId,principal.accountId,principal.clientId,proof.referenceId]);
+      if (grants.rows.length !== 1) throw new AuthBoundaryError('AUTH_REQUIRED');
+    });
+    await observePrincipalRead(diagnostic,'consent',()=>this.#requireConsent(this.#pool,proof.userId,principal.clientId,proof.referenceId,proof.scopes));
+    await observePrincipalRead(diagnostic,'session',()=>this.#requireSession(this.#pool,proof.userId,proof.referenceId));
   }
 }

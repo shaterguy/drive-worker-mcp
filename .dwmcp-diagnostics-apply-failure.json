@@ -1,0 +1,78 @@
+{
+  "phase": "APPLY_VERIFIED_DIAGNOSTICS_DEV2",
+  "baseline_head": "30e2b85bebead6203f76cb0ef2ba4211051967dc",
+  "stages": [
+    {
+      "label": "toplevel",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "/data/data/com.termux/files/home/work/drive-worker-mcp\n",
+      "stderr": ""
+    },
+    {
+      "label": "branch",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "head",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "30e2b85bebead6203f76cb0ef2ba4211051967dc\n",
+      "stderr": ""
+    },
+    {
+      "label": "clean_before",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "origin",
+      "exit_code": 0,
+      "signal": null
+    },
+    {
+      "label": "remote_baseline",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "30e2b85bebead6203f76cb0ef2ba4211051967dc\trefs/heads/v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "repository_identity",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\"archived\":false,\"default_branch\":\"v0.1.0-dev1\",\"full_name\":\"shaterguy/drive-worker-mcp\",\"id\":1420159339,\"owner\":{\"id\":108107617,\"login\":\"shaterguy\"},\"private\":false}\n",
+      "stderr": ""
+    },
+    {
+      "label": "tracked_paths",
+      "exit_code": 0,
+      "signal": null
+    },
+    {
+      "label": "changed_paths",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "package-lock.json\npackage.json\nsrc/auth/authority.ts\nsrc/auth/bootstrap.ts\nsrc/auth/deployment.ts\nsrc/auth/protected-mcp.ts\nsrc/auth/runtime.ts\nsrc/mcp.ts\n",
+      "stderr": ""
+    },
+    {
+      "label": "new_paths",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "DIAGNOSTICS-HANDOFF.md\nsrc/auth/request-diagnostics.ts\ntests/auth-instrumented-boundary.test.ts\ntests/auth-request-diagnostics.test.ts\nverification/diagnostics-dev2-first-failure.json\nverification/diagnostics-dev2-isolated-green.json\n",
+      "stderr": ""
+    }
+  ],
+  "status": "STOPPED",
+  "installed": false,
+  "production_database_contacted": false,
+  "production_environment_copied": false,
+  "pushed": false,
+  "blocker": "UNEXPECTED_UNTRACKED_CHANGE"
+}

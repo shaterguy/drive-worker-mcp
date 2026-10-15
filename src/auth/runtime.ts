@@ -1,5 +1,6 @@
 import type { Pool } from 'pg';
-import { createAuth, accessTokenForTenant } from './better-auth.ts';
+import { createAuth, accessTokenForTenant, type DriveWorkerAuth } from './better-auth.ts';
+import type { RequestDiagnostics } from './request-diagnostics.ts';
 import { PostgresAuthAuthority } from './authority.ts';
 import { Connections } from './connections.ts';
 import { createUi } from './ui.ts';
@@ -63,25 +64,37 @@ export function createRuntime(config: AuthConfig, pool: Pool, cursorKey: Uint8Ar
     return handleMcpRequest(request,principal,service);
   });
   const ui = createUi(auth,config,connections);
-  return { auth, authority, connections, async fetch(request: Request): Promise<Response> {
+  return { auth, authority, connections, fetch:createRuntimeRouter(config,{auth,ui,mcp}) };
+}
+
+/** The same router is dependency-injected for secret-free boundary fixtures. */
+export function createRuntimeRouter(config: AuthConfig, handlers: {
+  auth: Pick<DriveWorkerAuth,'handler'>;
+  ui: (request: Request) => Promise<Response>;
+  mcp: (request: Request, diagnostic?: RequestDiagnostics) => Promise<Response>;
+}) {
+  return async (request: Request, diagnostic?: RequestDiagnostics): Promise<Response> => {
     try {
+      diagnostic?.markPhase('boundary');
       assertRequestOrigin(request,config);
       const path = new URL(request.url).pathname;
       if (path === '/health' && request.method === 'GET') return noStore(Response.json({
         service:'drive-worker-mcp', status:'alive', authentication:'candidate', user_ready:false,
       }));
-      if (path === '/mcp') return mcp(request);
+      if (path === '/mcp') return handlers.mcp(request,diagnostic);
       const methods = AUTH_METHODS[path];
       if (methods) {
         if (!methods.includes(request.method)) return noStore(new Response(null,{status:405,headers:{Allow:methods.join(', ')}}));
-        return noStore(await auth.handler(await boundedRequest(request,65536)));
+        const bounded=await boundedRequest(request,65536);
+        if (path==='/api/auth/oauth2/token') diagnostic?.markPhase('oauth_token');
+        return noStore(await handlers.auth.handler(bounded));
       }
-      if (['/sign-in','/connect','/consent'].includes(path) || path.startsWith('/ui/')) return noStore(await ui(request));
+      if (['/sign-in','/connect','/consent'].includes(path) || path.startsWith('/ui/')) return noStore(await handlers.ui(request));
       return noStore(Response.json({error:'NOT_FOUND'},{status:404}));
     } catch (error) {
       const code = error instanceof AuthBoundaryError ? error.code : 'AUTH_UNAVAILABLE';
       const status = code === 'AUTH_REQUIRED' ? 401 : code === 'REQUEST_TOO_LARGE' ? 413 : code === 'AUTH_UNAVAILABLE' ? 503 : 400;
       return noStore(Response.json({error:code},{status}));
     }
-  } };
+  };
 }
