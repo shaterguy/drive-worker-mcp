@@ -1,0 +1,120 @@
+{
+  "version": "0.1.0-dev3",
+  "base": "44354676b27dd9d7a3f8246efc8356d86f46c687",
+  "status": "PASS",
+  "records": [
+    {
+      "label": "RED",
+      "args": [
+        "node",
+        "--test",
+        "tests/target-server.test.ts",
+        "tests/target-server-mcp.test.ts"
+      ],
+      "exit_code": 1,
+      "duration_seconds": 1.422,
+      "log_sha256": "0c68444f5096ada66dda96f4b41eac6d61f672e2ad9fb482bf52ee4f530426ef"
+    },
+    {
+      "label": "FOCUSED",
+      "args": [
+        "node",
+        "--test",
+        "tests/target-server.test.ts",
+        "tests/target-server-mcp.test.ts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.35,
+      "log_sha256": "756347e84c69d7e530cdb303b84670124a11b572e1d640c0b7e756fbac91e5ee"
+    },
+    {
+      "label": "TEST",
+      "args": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 15.402,
+      "log_sha256": "21840bf9c8a494da74c51d3c841b78ce48f28d938629fba60564a2f2b2057c7b"
+    },
+    {
+      "label": "TYPECHECK",
+      "args": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 127,
+      "duration_seconds": 0.412,
+      "log_sha256": "af5a6de6e444775d60c72fa5286742e776097e89e7d395d7b08eaec06d2d74ac"
+    },
+    {
+      "label": "TYPECHECK_NODE",
+      "args": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "exit_code": 2,
+      "duration_seconds": 5.541,
+      "log_sha256": "c23b09013af6a7b10897c1baf578f9f07eed018f16fb01b1683b2474c009bac1"
+    },
+    {
+      "label": "SDK_TEST_UPDATED",
+      "args": [
+        "node",
+        "--test",
+        "tests/target-server-mcp.test.ts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.282,
+      "log_sha256": "1033e9602190239f704ebea8164174fad712e83038d0ff33935dd76842e66937"
+    },
+    {
+      "label": "TYPECHECK_NODE_R2",
+      "args": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 4.963,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "BUILD_NODE",
+      "args": [
+        "node",
+        "node_modules/typescript/bin/tsc"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 5.224,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "DIFF_CHECK",
+      "args": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.016,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "execution_environment": "Galaxy-Tab-S11-Ultra Node24.18.0",
+  "files": {
+    "README.md": "b702781b9d567cfdf7059fd4eee57cff9abaf70d387ca2c63f7521fa2d9cfaf6",
+    "package-lock.json": "f23afddeed0550896fc2d4edf62ca851dfb1749357862be24ee6492d8d01efcf",
+    "package.json": "e886dd68ecaf4285a510b7baaa2abf00887333f2c7acfe75d208e3c9f4e232f5",
+    "src/mcp.ts": "aff5010a6e76d3fe176bde4b4815b2ef16b45e43ba457fcda7196f71736c543a",
+    "src/service.ts": "929470b565eb2eedee8de6a254f457d85aabcb83124974c89f302dc5af8f9189",
+    "tests/service.test.ts": "f2d5a34a6492fddab93ff870ef6197dfb6cfe097e227a00c51451a19e60f9537",
+    "tests/target-server-mcp.test.ts": "ffee87052ad6d90c4d384f6fb43fbcac66315d128ee4cdf28d92d99dbda05312",
+    "tests/target-server.test.ts": "3aa1c65d2ad806dae7ea26ef4efa5c53cc4304732bc8377663be072785c07c43"
+  },
+  "no_production_credentials": true,
+  "live_database_race_test": false,
+  "reused_test_evidence": "Product bytes unchanged; prior 107-test suite reused except updated SDK schema narrowing test rerun independently"
+}

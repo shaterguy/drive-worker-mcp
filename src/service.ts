@@ -8,6 +8,7 @@ export const LIMITS = Object.freeze({ commandBytes: 256 * 1024, resultBytes: 102
 const FOLDER = 'application/vnd.google-apps.folder';
 const STATUSES = new Set(['CLAIMED', 'RUNNING', 'DONE', 'FAILED', 'ERROR', 'TIMED_OUT', 'INVALID']);
 const COMMAND_KEYS = new Set(['job_id', 'command', 'cwd', 'timeout_ms', 'shell', 'env', 'stdin', 'target_server']);
+const TARGET_SERVERS = new Set(['Galaxy-S25', 'Galaxy-Tab-S11-Ultra']);
 const FILE_ID = /^[A-Za-z0-9_-]{1,256}$/;
 function record(value: unknown, error: string): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)
@@ -39,7 +40,13 @@ export function normalizeCommand(input: unknown, route: Route) {
     command: str(obj.command, 128 * 1024, 'INVALID_COMMAND'), cwd, timeout_ms: Number(obj.timeout_ms) };
   if (obj.shell !== undefined) body.shell = str(obj.shell, 4096, 'INVALID_COMMAND');
   if (obj.stdin !== undefined) body.stdin = str(obj.stdin, 64 * 1024, 'INVALID_COMMAND', true);
-  if (obj.target_server !== undefined) body.target_server = str(obj.target_server, 128, 'INVALID_COMMAND');
+  const inputCorrections: { field: 'target_server'; code: 'UNSUPPORTED_TARGET_OMITTED'; action: 'use_worker_automatic_selection' }[] = [];
+  if (obj.target_server !== undefined) {
+    const target = str(obj.target_server, 128, 'INVALID_COMMAND', true);
+    if (TARGET_SERVERS.has(target)) body.target_server = target;
+    else if (target !== '') inputCorrections.push({ field: 'target_server',
+      code: 'UNSUPPORTED_TARGET_OMITTED', action: 'use_worker_automatic_selection' });
+  }
   if (obj.env !== undefined) {
     const env = record(obj.env, 'INVALID_COMMAND');
     if (Object.keys(env).length > 128) fail('INVALID_COMMAND');
@@ -53,7 +60,7 @@ export function normalizeCommand(input: unknown, route: Route) {
   if (Buffer.byteLength(json) > LIMITS.commandBytes) fail('INVALID_COMMAND');
   const { target_server: _target, ...routingPayload } = body;
   return { body, json, hash: digest(json), routingPayloadHash: digest(canonical(routingPayload)),
-    routingEligible: body.target_server === undefined || body.target_server.trim().toUpperCase() === 'AUTO' };
+    routingEligible: body.target_server === undefined, inputCorrections };
 }
 function link(id: string) { return `https://drive.google.com/file/d/${encodeURIComponent(id)}/view`; }
 function fileInFolder(meta: DriveFile | null, folder: string, name: string, json = false): meta is DriveFile {
@@ -100,6 +107,8 @@ export class DriveWorkerService {
   async publish(p: Principal, input: unknown, route: Route) {
     await this.authorize(p, route === 'manual' ? 'manual:publish' : 'jobs:submit');
     const command = normalizeCommand(input, route);
+    const reply = (publication: Publication) => ({ ...publicationReply(publication),
+      ...(command.inputCorrections.length ? { input_corrections: command.inputCorrections } : {}) });
     const { drive, binding } = await this.context(p);
     const folderId = route === 'manual' ? binding.manualFolderId : binding.commandsFolderId;
     await this.folder(drive, folderId, true);
@@ -113,7 +122,7 @@ export class DriveWorkerService {
         routingEligible: command.routingEligible, createdTime: null, fileId, folderId, state: 'PREPARING' });
     }
     if (pub.accountId !== p.accountId || pub.jobId !== command.body.job_id || pub.route !== route || pub.contentHash !== command.hash) fail('IDEMPOTENCY_CONFLICT');
-    if (pub.state === 'PUBLISHED' || pub.state === 'SUBMITTED') return publicationReply(pub);
+    if (pub.state === 'PUBLISHED' || pub.state === 'SUBMITTED') return reply(pub);
     if (pub.folderId !== folderId) fail('IDEMPOTENCY_CONFLICT');
     try {
       let meta = await drive.getMetadata(pub.fileId);
@@ -130,7 +139,7 @@ export class DriveWorkerService {
       const text = await this.stableRead(drive, meta, LIMITS.commandBytes, 'SUBMISSION_OUTCOME_UNKNOWN');
       if (digest(text) !== pub.contentHash) fail('SUBMISSION_OUTCOME_UNKNOWN');
       pub = await this.deps.store.setPublicationState(p.accountId, pub.jobId, route === 'manual' ? 'PUBLISHED' : 'SUBMITTED', meta.createdTime);
-      return publicationReply(pub);
+      return reply(pub);
     } catch (e) {
       try { await this.deps.store.setPublicationState(p.accountId, pub.jobId, 'UNKNOWN'); } catch { /* Preserve the original durable reservation. */ }
       if (e instanceof ServiceError && ['GOOGLE_REAUTH_REQUIRED', 'INSUFFICIENT_SCOPE',

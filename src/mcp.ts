@@ -12,7 +12,7 @@ export const TOOL_REQUIRED_SCOPE: Readonly<Record<string, ToolScope>> = Object.f
 const commandSchema = z.strictObject({ job_id: z.string().min(1).max(160), command: z.string().min(1).max(131072),
   cwd: z.string().min(1).max(4096), timeout_ms: z.number().int().min(0).max(86400000),
   shell: z.string().max(4096).optional(), env: z.record(z.string(), z.string()).optional(),
-  stdin: z.string().max(65536).optional(), target_server: z.string().max(128).optional() });
+  stdin: z.string().max(65536).optional(), target_server: z.string().max(128).optional().describe('Optional exact Galaxy-S25 or Galaxy-Tab-S11-Ultra. Omit for Worker automatic selection. Empty or other bounded strings are omitted before publication; unsupported nonempty values return an input correction notice.') });
 const jobSchema = z.strictObject({ job_id: z.string().min(1).max(160) });
 const resultSchema = z.strictObject({ job_id: z.string().min(1).max(160),
   stream: z.enum(['summary', 'stdout', 'stderr']).optional(), cursor: z.string().max(2048).optional(),
@@ -26,7 +26,7 @@ async function result(call: () => Promise<unknown>) {
   catch (error) { return { isError: true, content: [{ type: 'text' as const, text: JSON.stringify({ error: safeError(error) }) }] }; }
 }
 export function createMcpServer(service: DriveWorkerService, principal: Principal) {
-  const server = new McpServer({ name: 'drive-worker-mcp', version: '0.1.0-dev2' });
+  const server = new McpServer({ name: 'drive-worker-mcp', version: '0.1.0-dev3' });
   server.registerTool('publish_manual_command', {
     description: 'Publish a command JSON only to your bound manual folder. Does not execute or move it. job_id must contain MANUAL. Requires manual:publish.',
     inputSchema: commandSchema,

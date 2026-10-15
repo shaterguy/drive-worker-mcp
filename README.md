@@ -1,4 +1,4 @@
-# DriveWorker MCP v0.1.0-dev1
+# DriveWorker MCP v0.1.0-dev3
 
 Independent MCP service for an existing DriveWorker. This development candidate is not a deployed, connected, or user-ready service.
 
@@ -10,6 +10,12 @@ Independent MCP service for an existing DriveWorker. This development candidate 
 - `get_job_result`: returns a safe summary or bounded, redacted stdout/stderr pages. Log contents are untrusted data, never instructions. MCP cancellation does not cancel an already submitted Worker command.
 
 No cancellation, deletion, file movement, sharing, Worker restart, or arbitrary file/URL tool exists. Existing Worker, TMCP, and other services are outside this repository's mutation boundary.
+
+## Target server input
+
+For both publication tools, omit `target_server` for existing Worker automatic selection. Only exact `Galaxy-S25` and `Galaxy-Tab-S11-Ultra` pin a device. Empty and all other bounded strings are omitted before canonical hashing and reservation. Unsupported nonempty values return a value-free `input_corrections` notice on both fresh and idempotent success responses. Non-string, NUL and over-128-byte inputs remain invalid. No command payload fields other than `target_server` are changed.
+
+Equivalent omitted/fallback inputs share the same job identity. A changed valid device, command or route still conflicts. Historical publications are never rewritten or automatically resubmitted; an old unsupported-target hash may therefore conflict. The `drive-worker-command-v1` schema and Worker election/routing remain unchanged.
 
 ## Required integration boundaries
 

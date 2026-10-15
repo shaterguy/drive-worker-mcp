@@ -169,7 +169,7 @@ test('Worker routed copy is verified using immutable publication digest without 
 });
 
 test('pinned-target publication cannot be converted into a routed copy and origin input is forbidden', async () => {
-  const { service, drive, p } = setup(); const input = { ...command, target_server: 'pinned' };
+  const { service, drive, p } = setup(); const input = { ...command, target_server: 'Galaxy-S25' };
   assert.throws(() => normalizeCommand({ ...input, origin_command_file_id: 'forged' }, 'direct'), code('INVALID_COMMAND'));
   const publication = await service.submitDirect(p, input);
   drive.put('routed', `${command.job_id}.target-other.json`, 'a-commands', JSON.stringify({
