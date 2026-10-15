@@ -1,0 +1,106 @@
+{
+  "phase": "DEPLOYMENT_STATIC_BOUNDARY",
+  "workspace": "/data/data/com.termux/files/home/work/drive-worker-mcp",
+  "node": "v24.18.0",
+  "stages": [
+    {
+      "label": "git_toplevel",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "/data/data/com.termux/files/home/work/drive-worker-mcp\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_branch",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_head",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "b4e8c6db47ab8dd960b42330ff037ba466d6b7a3\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_clean",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "git_origin",
+      "exit_code": 0,
+      "signal": null
+    },
+    {
+      "label": "remote_baseline",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "b4e8c6db47ab8dd960b42330ff037ba466d6b7a3\trefs/heads/v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "repository_identity",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\"isPrivate\":true,\"nameWithOwner\":\"shaterguy/drive-worker-mcp\"}\n",
+      "stderr": ""
+    },
+    {
+      "label": "deployment_boundary_red",
+      "exit_code": 1,
+      "signal": null,
+      "stdout": "✖ deployment serves static files only from explicit public output and pins install policy (16.027077ms)\n✖ public output contains only the reviewed non-sensitive robots file, with no symlinks (4.781462ms)\n✔ scaffold handler denies internal paths and keeps auth unavailable; deployed static routing is a separate live gate (121.056615ms)\nℹ tests 3\nℹ suites 0\nℹ pass 1\nℹ fail 2\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 572.57877\n\n✖ failing tests:\n\ntest at tests/deployment-boundary.test.ts:9:1\n✖ deployment serves static files only from explicit public output and pins install policy (16.027077ms)\n  AssertionError [ERR_ASSERTION]: STATIC_OUTPUT_DIRECTORY_MUST_BE_PUBLIC\n  + actual - expected\n  \n  + undefined\n  - 'public'\n  \n      at TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/deployment-boundary.test.ts:11:10)\n      at async Test.run (node:internal/test_runner/test:1332:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: undefined,\n    expected: 'public',\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at tests/deployment-boundary.test.ts:22:1\n✖ public output contains only the reviewed non-sensitive robots file, with no symlinks (4.781462ms)\n  Error: ENOENT: no such file or directory, lstat '/data/data/com.termux/files/home/work/drive-worker-mcp/public/'\n      at async lstat (node:internal/fs/promises:1029:18)\n      at async TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/deployment-boundary.test.ts:24:16)\n      at async Test.run (node:internal/test_runner/test:1332:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {\n    errno: -2,\n    code: 'ENOENT',\n    syscall: 'lstat',\n    path: '/data/data/com.termux/files/home/work/drive-worker-mcp/public/'\n  }\n",
+      "stderr": ""
+    },
+    {
+      "label": "deployment_boundary_green",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "✔ host is operator configured with no request-derived fallback (5.2ms)\n✔ configuration fails closed and does not print secret values in error messages (6.089462ms)\n✔ identity uses issuer and subject, never email (1.388308ms)\n✔ setup scaffold is live but cannot accidentally claim ready (115.327693ms)\n✔ deployment serves static files only from explicit public output and pins install policy (23.349846ms)\n✔ public output contains only the reviewed non-sensitive robots file, with no symlinks (4.676231ms)\n✔ scaffold handler denies internal paths and keeps auth unavailable; deployed static routing is a separate live gate (122.571692ms)\nℹ tests 7\nℹ suites 0\nℹ pass 7\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 574.981769\n",
+      "stderr": ""
+    },
+    {
+      "label": "typecheck",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "build",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "status": "STATIC_BOUNDARY_VERIFIED_LOCALLY_LIVE_CHECK_PENDING",
+  "user_ready": false,
+  "runtime_mounted": false,
+  "references": [
+    "https://vercel.com/docs/builds/configure-a-build#output-directory",
+    "https://vercel.com/docs/project-configuration/vercel-json#outputdirectory",
+    "https://vercel.com/docs/project-configuration/vercel-json#installcommand"
+  ],
+  "live_gates": [
+    "verify Vercel Node 24 and exact deployment source SHA",
+    "verify /health 200 and auth/MCP 503",
+    "verify source/SQL/verification/dist/package/env/git paths are 404",
+    "inspect actual build logs for native API install path and lifecycle script policy"
+  ],
+  "source_sha256": {
+    "tests/deployment-boundary.test.ts": "ab5162a28433fd78217f76a118f99a7c0efd4a77254924baf77df630f48b0123",
+    "vercel.json": "1a44baf34e767820a567ccf8b7c90c871f9ee13816d4372a25cd3a66ec14a437",
+    "public/robots.txt": "331ea9090db0c9f6f597bd9840fd5b171830f6e0b3ba1cb24dfa91f0c95aedc1"
+  },
+  "unchanged_source_sha256": {
+    "api/index.ts": "8dbd9466cd402c32b784bbe1d7d37177e31bae45b9ee787446f49198fb31b908",
+    "package.json": "e54bd612e025c256aa989463e8d0afe7c53d3822a021b98aa11d60c922df633a",
+    "package-lock.json": "ae1e2cf935e1ff8f1b6348782f2513d083c29d51c416559e6a96f77d7f0ba78a"
+  }
+}
