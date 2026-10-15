@@ -1,6 +1,6 @@
 import type { Pool } from 'pg';
 import type { Drive } from '../contracts.ts';
-import { AuthBoundaryError } from './config.ts';
+import { AuthBoundaryError, GOOGLE_ISSUER, canonicalGoogleIdentity } from './config.ts';
 import type { PostgresAuthAuthority } from './authority.ts';
 
 export class Connections {
@@ -52,7 +52,8 @@ export class Connections {
       this.pool.query<{ id: string; client_id: string; revoked_at: Date | null }>(
         'SELECT id,client_id,revoked_at FROM dw_mcp_grants WHERE tenant_id=$1 ORDER BY created_at DESC LIMIT 100', [tenant.id]),
     ]);
-    return { binding: binding.rows[0] ?? null, grants: grants.rows };
+    // ensureTenantForUser resolved the session user through the verified Google account, never email/input.
+    return { identity:canonicalGoogleIdentity(GOOGLE_ISSUER,tenant.google_sub), binding: binding.rows[0] ?? null, grants: grants.rows };
   }
 
   async disconnect(userId: string, grantId: unknown): Promise<void> {

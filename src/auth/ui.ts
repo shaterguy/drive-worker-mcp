@@ -4,6 +4,7 @@ import type { DriveWorkerAuth } from './better-auth.ts';
 import type { Connections } from './connections.ts';
 import { AuthBoundaryError, OAUTH_SCOPES, type AuthConfig } from './config.ts';
 import { boundedRequest, noStore } from './request-guards.ts';
+import { initialFolderInputs } from './owner-prefill.ts';
 
 const escape = (value: unknown): string => String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]!));
 const labels: Record<string,string> = {
@@ -94,7 +95,7 @@ export function createUi(auth: DriveWorkerAuth, config: AuthConfig, connections:
         const form = binding ? `<p>Saved folder settings are preserved for this Google identity.</p><dl>${Object.entries(binding).map(([k,v])=>`<dt>${escape(k)}</dt><dd>${escape(v ?? '')}</dd>`).join('')}</dl>
           ${oauthQuery ? '<form action="/ui/continue"><button>Continue to consent</button></form>' : ''}` :
           `<p>Enter folder IDs from your own Drive. Manual and direct folders must be different. Readability does not guarantee drive.file write permission; first-write verification is still required.</p>
-          <form action="/ui/connect">${[['manualFolderId','Manual commands'],['commandsFolderId','Direct commands'],['resultsFolderId','Results'],['stateFolderId','State (optional)']].map(([name,label])=>`<p><label>${label}<input name="${name}" ${name==='stateFolderId'?'':'required'} pattern="[A-Za-z0-9_-]{1,256}" maxlength="256"></label></p>`).join('')}<button>Save folder settings</button></form>`;
+          <form action="/ui/connect">${initialFolderInputs(config.ownerPrefill,state.identity,Boolean(binding))}<button>Save folder settings</button></form>`;
         const grants = state.grants.map(g=>`<li>${escape(g.client_id)} ${g.revoked_at?'(disconnected)':`<form action="/ui/disconnect"><input type="hidden" name="grantId" value="${escape(g.id)}"><button>Disconnect this client</button></form>`}</li>`).join('');
         return page('Your DriveWorker connection', `<p>Signed in as ${escape(current.user.email)}</p>${form}<h2>Clients</h2>
           <p>Disconnect revokes only the selected MCP client connection. Your Google grant, saved folder settings and Drive files remain. Google access can be removed from your Google Account permissions.</p><ul>${grants}</ul>

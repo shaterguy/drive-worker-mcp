@@ -15,9 +15,15 @@ export class AuthBoundaryError extends Error {
   constructor(code: string) { super(code); this.name = 'AuthBoundaryError'; this.code = code; }
 }
 
+export interface OwnerFolderPrefill {
+  readonly issuer: typeof GOOGLE_ISSUER; readonly sub: string;
+  readonly manualFolderId: string; readonly commandsFolderId: string; readonly resultsFolderId: string;
+}
+
 export interface AuthConfig {
   origin: string; issuer: string; resource: string; googleCallback: string;
   databaseUrl: string; secret: string; googleClientId: string; googleClientSecret: string;
+  readonly ownerPrefill?: OwnerFolderPrefill;
 }
 
 /** Accept only an operator-set, verified deployment origin. Never infer it from a request. */
@@ -53,7 +59,9 @@ export function loadAuthConfig(env: Readonly<Record<string, string | undefined>>
   if (Buffer.byteLength(secret) < 32 || /^(change|example|replace|your[-_])/i.test(secret)) {
     throw new AuthBoundaryError('AUTH_CONFIGURATION_INVALID');
   }
+  const ownerPrefill = parseOwnerFolderPrefill(env.DWMCP_OWNER_PREFILL_JSON);
   return Object.freeze({
+    ...(ownerPrefill ? { ownerPrefill } : {}),
     origin, issuer: `${origin}${AUTH_BASE_PATH}`, resource: `${origin}${MCP_PATH}`,
     googleCallback: `${origin}${GOOGLE_CALLBACK_PATH}`, databaseUrl, secret,
     googleClientId: required('GOOGLE_CLIENT_ID'), googleClientSecret: required('GOOGLE_CLIENT_SECRET'),
@@ -67,4 +75,24 @@ export function canonicalGoogleIdentity(issuer: unknown, sub: unknown): { issuer
     throw new AuthBoundaryError('GOOGLE_IDENTITY_INVALID');
   }
   return { issuer: GOOGLE_ISSUER, sub };
+}
+
+/** Private operator setting. No defaults, account guessing, partial configuration, or value logging. */
+export function parseOwnerFolderPrefill(value: string | undefined): OwnerFolderPrefill | undefined {
+  if (value === undefined) return undefined;
+  const invalid = () => new AuthBoundaryError('OWNER_PREFILL_CONFIGURATION_INVALID');
+  if (!value || Buffer.byteLength(value) > 4096) throw invalid();
+  let parsed: unknown;
+  try { parsed = JSON.parse(value); } catch { throw invalid(); }
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw invalid();
+  const input = parsed as Record<string, unknown>;
+  const fields = ['issuer','sub','manualFolderId','commandsFolderId','resultsFolderId'];
+  if (Object.keys(input).length !== fields.length || !fields.every(key => Object.hasOwn(input,key))) throw invalid();
+  if (input.issuer !== GOOGLE_ISSUER || typeof input.sub !== 'string' || !input.sub ||
+      input.sub.length > 255 || /\s|[\u0000-\u001f]/.test(input.sub)) throw invalid();
+  const { manualFolderId, commandsFolderId, resultsFolderId } = input;
+  if (typeof manualFolderId !== 'string' || typeof commandsFolderId !== 'string' || typeof resultsFolderId !== 'string' ||
+      ![manualFolderId,commandsFolderId,resultsFolderId].every(id => /^[A-Za-z0-9_-]{1,256}$/.test(id)) ||
+      new Set([manualFolderId,commandsFolderId,resultsFolderId]).size !== 3) throw invalid();
+  return Object.freeze({issuer:GOOGLE_ISSUER,sub:input.sub,manualFolderId,commandsFolderId,resultsFolderId});
 }
