@@ -1,0 +1,105 @@
+{
+  "phase": "JS_COMPILER_RECOVERY",
+  "workspace": "/data/data/com.termux/files/home/work/drive-worker-mcp",
+  "node": "v24.18.0",
+  "input_manifest_sha256": "518ffa048ba6ec31d369d575f74c093dc989fd830be704d23e0ac8418753808d",
+  "stages": [
+    {
+      "label": "git_toplevel",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "/data/data/com.termux/files/home/work/drive-worker-mcp\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_branch",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_existing_head",
+      "exit_code": 128,
+      "signal": null
+    },
+    {
+      "label": "git_remotes",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "git_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": ".dwmcp-green-failure.json\n.gitignore\nREADME.md\napi/index.ts\npackage-lock.json\npackage.json\nsql/core.sql\nsrc/auth/config.ts\nsrc/auth/health.ts\nsrc/contracts.ts\nsrc/errors.ts\nsrc/google-drive.ts\nsrc/mcp.ts\nsrc/output.ts\nsrc/postgres-store.ts\nsrc/service.ts\ntests/auth-config.test.ts\ntests/fakes.ts\ntests/google-drive.test.ts\ntests/mcp.test.ts\ntests/output.test.ts\ntests/postgres-store.test.ts\ntests/service.test.ts\ntsconfig.json\nvercel.json\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry:typescript6",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"6.0.3\",\n  \"bin\": {\n    \"tsc\": \"bin/tsc\",\n    \"tsserver\": \"bin/tsserver\"\n  },\n  \"engines\": {\n    \"node\": \">=14.17\"\n  },\n  \"dist.tarball\": \"https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz\",\n  \"dist.integrity\": \"sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "resolve_exact_lock",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\nup to date in 915ms\n",
+      "stderr": ""
+    },
+    {
+      "label": "lockfile_official_registry_gate",
+      "packages": 33,
+      "passed": true
+    },
+    {
+      "label": "install_exact_lock",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\nadded 33 packages in 3s\n",
+      "stderr": "npm warn tarball tarball data for typescript@https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz (sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==) seems to be corrupted. Trying again.\n"
+    },
+    {
+      "label": "installed_versions",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"0.1.0-dev1\",\n  \"name\": \"drive-worker-mcp\",\n  \"dependencies\": {\n    \"@electric-sql/pglite\": {\n      \"version\": \"0.5.10\",\n      \"resolved\": \"https://registry.npmjs.org/@electric-sql/pglite/-/pglite-0.5.10.tgz\",\n      \"overridden\": false\n    },\n    \"@modelcontextprotocol/client\": {\n      \"version\": \"2.3.1\",\n      \"resolved\": \"https://registry.npmjs.org/@modelcontextprotocol/client/-/client-2.3.1.tgz\",\n      \"overridden\": false\n    },\n    \"@modelcontextprotocol/server\": {\n      \"version\": \"2.3.1\",\n      \"resolved\": \"https://registry.npmjs.org/@modelcontextprotocol/server/-/server-2.3.1.tgz\",\n      \"overridden\": false\n    },\n    \"@types/node\": {\n      \"version\": \"24.19.2\",\n      \"resolved\": \"https://registry.npmjs.org/@types/node/-/node-24.19.2.tgz\",\n      \"overridden\": false\n    },\n    \"@types/pg\": {\n      \"version\": \"8.23.1\",\n      \"resolved\": \"https://registry.npmjs.org/@types/pg/-/pg-8.23.1.tgz\",\n      \"overridden\": false\n    },\n    \"pg\": {\n      \"version\": \"8.23.1\",\n      \"resolved\": \"https://registry.npmjs.org/pg/-/pg-8.23.1.tgz\",\n      \"overridden\": false\n    },\n    \"typescript\": {\n      \"version\": \"6.0.3\",\n      \"resolved\": \"https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz\",\n      \"overridden\": false\n    },\n    \"zod\": {\n      \"version\": \"4.6.7\",\n      \"resolved\": \"https://registry.npmjs.org/zod/-/zod-4.6.7.tgz\",\n      \"overridden\": false\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "js_compiler_version",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "Version 6.0.3\n",
+      "stderr": ""
+    },
+    {
+      "label": "tests",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\n> drive-worker-mcp@0.1.0-dev1 test\n> node --test tests/*.test.ts\n\n✔ host is operator configured with no request-derived fallback (5.146154ms)\n✔ configuration fails closed and does not print secret values in error messages (7.217923ms)\n✔ identity uses issuer and subject, never email (1.446769ms)\n✔ setup scaffold is live but cannot accidentally claim ready (124.664231ms)\n✔ Google adapter reserves IDs and creates multipart JSON with that exact ID and parent (120.516077ms)\n✔ Google 409 surfaces as a fixed-ID reconciliation condition, never a new ID (2.064308ms)\n✔ download cap is enforced against actual streamed bytes even when content-length lies (3.243769ms)\n✔ only transient statuses retry and Retry-After is respected without logging upstream bodies (6.410846ms)\n✔ exact-name query handles pagination and preserves duplicates rather than selecting latest (3.119308ms)\n✔ service reconciles a real adapter 409 by exact reserved-ID metadata and body hash (22.243308ms)\nresponseMode: 'json' drops mid-call notifications. subscriptions/listen streams are always served over SSE regardless; other notifications emitted before a result are dropped.\n✔ official SDK negotiates and serves exactly the four tools with fail-closed schema and grant gates (295.237923ms)\n✔ signed cursors reject tampering, tenant binding changes, invalid offsets and UTF-8 midpoints (7.574692ms)\n✔ whole-text redaction prevents credential fragments leaking across page boundaries (2.013462ms)\n✔ Postgres schema and adapter preserve tenant keys, reservations, and confirmed states (3751.538077ms)\n✔ command normalization is stable across key order and refuses unknown destinations (7.315385ms)\n✔ manual publication creates exactly one JSON in the manual folder and never claims execution (6.305462ms)\n✔ direct requires distinct jobs:submit scope and writes only to Commands (2.510539ms)\n✔ concurrent identical requests converge on one Drive file (10.007ms)\n✔ lost create response reconciles the fixed ID without making a second file (1.492846ms)\n✔ DB failure after Drive create preserves the pre-reserved ID for retry (1.023ms)\n✔ route and body changes conflict and never promote a manual file (1.025231ms)\n✔ same job ID in two accounts has independent bindings and publications (1.051769ms)\n✔ missing, overlapping, and unwritable bindings fail before any publication (0.827077ms)\n✔ status without Result distinguishes manual and direct without mutating files (2.221615ms)\n✔ duplicate Results are an explicit conflict (0.675923ms)\n✔ schema, job ID and publication file mismatch are refused (1.535461ms)\n✔ all Worker statuses and execution uncertainty are retained without inferring success (3.660616ms)\n✔ log references must be in bound Results with the exact job and stream name (0.875384ms)\n✔ pagination returns bounded redacted output and rejects a stale cursor (3.790462ms)\n✔ revoked grant and unavailable grant database fail before any Drive access on every tool (0.954769ms)\n✔ Worker routed copy is verified using immutable publication digest without exposing command data (3.831077ms)\n✔ pinned-target publication cannot be converted into a routed copy and origin input is forbidden (1.152923ms)\n✔ cursor is invalid after a provider revision even if sanitized text is identical (2.923692ms)\n✔ an unreadable or missing publication file is never recreated after confirmation (0.756923ms)\n✔ oversized log is rejected before reading when metadata declares its size (0.553ms)\n✔ log pages omit repeated tails and error text; summary tails have UTF-8 byte limits (7.176231ms)\nℹ tests 36\nℹ suites 0\nℹ pass 36\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 4986.383693\n",
+      "stderr": ""
+    },
+    {
+      "label": "typecheck",
+      "exit_code": 2,
+      "signal": null,
+      "stdout": "\n> drive-worker-mcp@0.1.0-dev1 typecheck\n> tsc --noEmit\n\ntests/output.test.ts(20,95): error TS2322: Type 'string | null' is not assignable to type 'string'.\n  Type 'null' is not assignable to type 'string'.\n",
+      "stderr": ""
+    },
+    {
+      "label": "build",
+      "exit_code": 2,
+      "signal": null,
+      "stdout": "\n> drive-worker-mcp@0.1.0-dev1 build\n> tsc\n\ntests/output.test.ts(20,95): error TS2322: Type 'string | null' is not assignable to type 'string'.\n  Type 'null' is not assignable to type 'string'.\n",
+      "stderr": ""
+    }
+  ],
+  "status": "STOPPED",
+  "previous_failure_report_sha256": "338d6e5ebaa25092d77b44875cad169be616b82ad75f81768f2e89c67582088d",
+  "blocker": "VERIFICATION_FAILED_NO_COMMIT"
+}

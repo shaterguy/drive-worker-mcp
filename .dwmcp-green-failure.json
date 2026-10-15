@@ -1,0 +1,153 @@
+{
+  "phase": "GREEN_CANDIDATE",
+  "workspace": "/data/data/com.termux/files/home/work/drive-worker-mcp",
+  "node": "v24.18.0",
+  "input_manifest_sha256": "13121de4c5b3d426a0ad089b3a842a707899af0b075da6d568c7d8c1849132a5",
+  "stages": [
+    {
+      "label": "git_toplevel",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "/data/data/com.termux/files/home/work/drive-worker-mcp\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_branch",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "v0.1.0-dev1\n",
+      "stderr": ""
+    },
+    {
+      "label": "git_existing_head",
+      "exit_code": 128,
+      "signal": null
+    },
+    {
+      "label": "git_remotes",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "git_files",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": ".gitignore\npackage.json\nsrc/contracts.ts\nsrc/service.ts\ntests/fakes.ts\ntests/service.test.ts\ntsconfig.json\n",
+      "stderr": ""
+    },
+    {
+      "label": "adapter_red",
+      "exit_code": 1,
+      "signal": null,
+      "stdout": "✖ Google adapter reserves IDs and creates multipart JSON with that exact ID and parent (4.319077ms)\n✖ Google 409 surfaces as a fixed-ID reconciliation condition, never a new ID (2.676615ms)\n✖ download cap is enforced against actual streamed bytes even when content-length lies (0.676385ms)\n✖ only transient statuses retry and Retry-After is respected without logging upstream bodies (0.503077ms)\n✖ exact-name query handles pagination and preserves duplicates rather than selecting latest (3.359615ms)\n✖ service reconciles a real adapter 409 by exact reserved-ID metadata and body hash (128.328077ms)\nℹ tests 6\nℹ suites 0\nℹ pass 0\nℹ fail 6\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 650.386462\n\n✖ failing tests:\n\ntest at tests/google-drive.test.ts:5:1\n✖ Google adapter reserves IDs and creates multipart JSON with that exact ID and parent (4.319077ms)\n  Error: NOT_IMPLEMENTED\n      at GoogleDrive.reserveFileId (file:///data/data/com.termux/files/home/work/drive-worker-mcp/src/google-drive.ts:8:50)\n      at TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/google-drive.test.ts:12:28)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n\ntest at tests/google-drive.test.ts:19:1\n✖ Google 409 surfaces as a fixed-ID reconciliation condition, never a new ID (2.676615ms)\n  AssertionError [ERR_ASSERTION]: The validation function is expected to return \"true\". Received false\n  \n  Caught error:\n  \n  Error: NOT_IMPLEMENTED\n      at async TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/google-drive.test.ts:21:3)\n      at async Test.run (node:internal/test_runner/test:1332:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: Error: NOT_IMPLEMENTED\n        at GoogleDrive.createJson (file:///data/data/com.termux/files/home/work/drive-worker-mcp/src/google-drive.ts:9:103)\n        at TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/google-drive.test.ts:21:30)\n        at Test.runInAsyncScope (node:async_hooks:227:14)\n        at Test.run (node:internal/test_runner/test:1325:25)\n        at Test.processPendingSubtests (node:internal/test_runner/test:911:18)\n        at Test.postRun (node:internal/test_runner/test:1465:19)\n        at Test.run (node:internal/test_runner/test:1390:12)\n        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3),\n    operator: 'rejects',\n    diff: 'simple'\n  }\n\ntest at tests/google-drive.test.ts:25:1\n✖ download cap is enforced against actual streamed bytes even when content-length lies (0.676385ms)\n  AssertionError [ERR_ASSERTION]: The validation function is expected to return \"true\". Received false\n  \n  Caught error:\n  \n  Error: NOT_IMPLEMENTED\n      at async TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/google-drive.test.ts:30:3)\n      at async Test.run (node:internal/test_runner/test:1332:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: Error: NOT_IMPLEMENTED\n        at GoogleDrive.readBytes (file:///data/data/com.termux/files/home/work/drive-worker-mcp/src/google-drive.ts:11:75)\n        at TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/google-drive.test.ts:30:30)\n        at Test.runInAsyncScope (node:async_hooks:227:14)\n        at Test.run (node:internal/test_runner/test:1325:25)\n        at Test.processPendingSubtests (node:internal/test_runner/test:911:18)\n        at Test.postRun (node:internal/test_runner/test:1465:19)\n        at Test.run (node:internal/test_runner/test:1390:12)\n        at async Test.processPendingSubtests (node:internal/test_runner/test:911:7),\n    operator: 'rejects',\n    diff: 'simple'\n  }\n\ntest at tests/google-drive.test.ts:33:1\n✖ only transient statuses retry and Retry-After is respected without logging upstream bodies (0.503077ms)\n  Error: NOT_IMPLEMENTED\n      at GoogleDrive.reserveFileId (file:///data/data/com.termux/files/home/work/drive-worker-mcp/src/google-drive.ts:8:50)\n      at TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/google-drive.test.ts:37:28)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)\n      at Test.postRun (node:internal/test_runner/test:1465:19)\n      at Test.run (node:internal/test_runner/test:1390:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)\n\ntest at tests/google-drive.test.ts:44:1\n✖ exact-name query handles pagination and preserves duplicates rather than selecting latest (3.359615ms)\n  Error: NOT_IMPLEMENTED\n      at GoogleDrive.findExact (file:///data/data/com.termux/files/home/work/drive-worker-mcp/src/google-drive.ts:12:75)\n      at TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/google-drive.test.ts:51:29)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)\n      at Test.postRun (node:internal/test_runner/test:1465:19)\n      at Test.run (node:internal/test_runner/test:1390:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)\n\ntest at tests/google-drive.test.ts:54:1\n✖ service reconciles a real adapter 409 by exact reserved-ID metadata and body hash (128.328077ms)\n  Error: NOT_IMPLEMENTED\n      at GoogleDrive.getMetadata (file:///data/data/com.termux/files/home/work/drive-worker-mcp/src/google-drive.ts:10:56)\n      at DriveWorkerService.folder (file:///data/data/com.termux/files/home/work/drive-worker-mcp/src/service.ts:94:30)\n      at DriveWorkerService.publish (file:///data/data/com.termux/files/home/work/drive-worker-mcp/src/service.ts:105:16)\n      at async TestContext.<anonymous> (file:///data/data/com.termux/files/home/work/drive-worker-mcp/tests/google-drive.test.ts:75:18)\n      at async Test.run (node:internal/test_runner/test:1332:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry:@modelcontextprotocol/server",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\"2.3.1\"\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry:pg",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\"8.23.1\"\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry:zod",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\"4.6.7\"\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry:@types/node",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\"24.19.2\"\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry:@types/pg",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\"8.23.1\"\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry:typescript",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\"7.0.2\"\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry:@modelcontextprotocol/client",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\"2.3.1\"\n",
+      "stderr": ""
+    },
+    {
+      "label": "registry:@electric-sql/pglite",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\"0.5.10\"\n",
+      "stderr": ""
+    },
+    {
+      "label": "resolve_exact_lock",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\nup to date in 2s\n",
+      "stderr": ""
+    },
+    {
+      "label": "lockfile_official_registry_gate",
+      "packages": 53,
+      "passed": true
+    },
+    {
+      "label": "install_exact_lock",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\nadded 33 packages in 3s\n",
+      "stderr": ""
+    },
+    {
+      "label": "installed_versions",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "{\n  \"version\": \"0.1.0-dev1\",\n  \"name\": \"drive-worker-mcp\",\n  \"dependencies\": {\n    \"@electric-sql/pglite\": {\n      \"version\": \"0.5.10\",\n      \"resolved\": \"https://registry.npmjs.org/@electric-sql/pglite/-/pglite-0.5.10.tgz\",\n      \"overridden\": false\n    },\n    \"@modelcontextprotocol/client\": {\n      \"version\": \"2.3.1\",\n      \"resolved\": \"https://registry.npmjs.org/@modelcontextprotocol/client/-/client-2.3.1.tgz\",\n      \"overridden\": false\n    },\n    \"@modelcontextprotocol/server\": {\n      \"version\": \"2.3.1\",\n      \"resolved\": \"https://registry.npmjs.org/@modelcontextprotocol/server/-/server-2.3.1.tgz\",\n      \"overridden\": false\n    },\n    \"@types/node\": {\n      \"version\": \"24.19.2\",\n      \"resolved\": \"https://registry.npmjs.org/@types/node/-/node-24.19.2.tgz\",\n      \"overridden\": false\n    },\n    \"@types/pg\": {\n      \"version\": \"8.23.1\",\n      \"resolved\": \"https://registry.npmjs.org/@types/pg/-/pg-8.23.1.tgz\",\n      \"overridden\": false\n    },\n    \"pg\": {\n      \"version\": \"8.23.1\",\n      \"resolved\": \"https://registry.npmjs.org/pg/-/pg-8.23.1.tgz\",\n      \"overridden\": false\n    },\n    \"typescript\": {\n      \"version\": \"7.0.2\",\n      \"resolved\": \"https://registry.npmjs.org/typescript/-/typescript-7.0.2.tgz\",\n      \"overridden\": false\n    },\n    \"zod\": {\n      \"version\": \"4.6.7\",\n      \"resolved\": \"https://registry.npmjs.org/zod/-/zod-4.6.7.tgz\",\n      \"overridden\": false\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "tests",
+      "exit_code": 0,
+      "signal": null,
+      "stdout": "\n> drive-worker-mcp@0.1.0-dev1 test\n> node --test tests/*.test.ts\n\n✔ host is operator configured with no request-derived fallback (5.191769ms)\n✔ configuration fails closed and does not print secret values in error messages (7.612924ms)\n✔ identity uses issuer and subject, never email (1.479923ms)\n✔ setup scaffold is live but cannot accidentally claim ready (180.794846ms)\n✔ Google adapter reserves IDs and creates multipart JSON with that exact ID and parent (138.823308ms)\n✔ Google 409 surfaces as a fixed-ID reconciliation condition, never a new ID (1.912846ms)\n✔ download cap is enforced against actual streamed bytes even when content-length lies (3.562769ms)\n✔ only transient statuses retry and Retry-After is respected without logging upstream bodies (13.813923ms)\n✔ exact-name query handles pagination and preserves duplicates rather than selecting latest (7.365846ms)\n✔ service reconciles a real adapter 409 by exact reserved-ID metadata and body hash (35.809ms)\nresponseMode: 'json' drops mid-call notifications. subscriptions/listen streams are always served over SSE regardless; other notifications emitted before a result are dropped.\n✔ official SDK negotiates and serves exactly the four tools with fail-closed schema and grant gates (323.231769ms)\n✔ signed cursors reject tampering, tenant binding changes, invalid offsets and UTF-8 midpoints (9.002846ms)\n✔ whole-text redaction prevents credential fragments leaking across page boundaries (2.440308ms)\n✔ Postgres schema and adapter preserve tenant keys, reservations, and confirmed states (4144.947385ms)\n✔ command normalization is stable across key order and refuses unknown destinations (17.455462ms)\n✔ manual publication creates exactly one JSON in the manual folder and never claims execution (6.133231ms)\n✔ direct requires distinct jobs:submit scope and writes only to Commands (2.239154ms)\n✔ concurrent identical requests converge on one Drive file (15.962847ms)\n✔ lost create response reconciles the fixed ID without making a second file (1.778692ms)\n✔ DB failure after Drive create preserves the pre-reserved ID for retry (2.077846ms)\n✔ route and body changes conflict and never promote a manual file (1.482692ms)\n✔ same job ID in two accounts has independent bindings and publications (2.223154ms)\n✔ missing, overlapping, and unwritable bindings fail before any publication (0.853846ms)\n✔ status without Result distinguishes manual and direct without mutating files (5.131923ms)\n✔ duplicate Results are an explicit conflict (0.635077ms)\n✔ schema, job ID and publication file mismatch are refused (1.588385ms)\n✔ all Worker statuses and execution uncertainty are retained without inferring success (4.870384ms)\n✔ log references must be in bound Results with the exact job and stream name (1.055615ms)\n✔ pagination returns bounded redacted output and rejects a stale cursor (3.57077ms)\n✔ revoked grant and unavailable grant database fail before any Drive access on every tool (0.864923ms)\n✔ Worker routed copy is verified using immutable publication digest without exposing command data (3.550231ms)\n✔ pinned-target publication cannot be converted into a routed copy and origin input is forbidden (0.979154ms)\n✔ cursor is invalid after a provider revision even if sanitized text is identical (2.995923ms)\n✔ an unreadable or missing publication file is never recreated after confirmation (0.528539ms)\n✔ oversized log is rejected before reading when metadata declares its size (0.508ms)\n✔ log pages omit repeated tails and error text; summary tails have UTF-8 byte limits (7.116538ms)\nℹ tests 36\nℹ suites 0\nℹ pass 36\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 5524.017924\n",
+      "stderr": ""
+    },
+    {
+      "label": "typecheck",
+      "exit_code": 1,
+      "signal": null,
+      "stdout": "\n> drive-worker-mcp@0.1.0-dev1 typecheck\n> tsc --noEmit\n\n",
+      "stderr": "file:///data/data/com.termux/files/home/work/drive-worker-mcp/node_modules/typescript/lib/getExePath.js:53\n            throw new Error(\"Unable to resolve \" + platformPackageName + \". Either your platform is unsupported, or you are missing the package on disk.\");\n                  ^\n\nError: Unable to resolve @typescript/typescript-android-arm64. Either your platform is unsupported, or you are missing the package on disk.\n    at getExePath (file:///data/data/com.termux/files/home/work/drive-worker-mcp/node_modules/typescript/lib/getExePath.js:53:19)\n    at file:///data/data/com.termux/files/home/work/drive-worker-mcp/node_modules/typescript/lib/tsc.js:6:13\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:643:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.18.0\n"
+    },
+    {
+      "label": "build",
+      "exit_code": 1,
+      "signal": null,
+      "stdout": "\n> drive-worker-mcp@0.1.0-dev1 build\n> tsc\n\n",
+      "stderr": "file:///data/data/com.termux/files/home/work/drive-worker-mcp/node_modules/typescript/lib/getExePath.js:53\n            throw new Error(\"Unable to resolve \" + platformPackageName + \". Either your platform is unsupported, or you are missing the package on disk.\");\n                  ^\n\nError: Unable to resolve @typescript/typescript-android-arm64. Either your platform is unsupported, or you are missing the package on disk.\n    at getExePath (file:///data/data/com.termux/files/home/work/drive-worker-mcp/node_modules/typescript/lib/getExePath.js:53:19)\n    at file:///data/data/com.termux/files/home/work/drive-worker-mcp/node_modules/typescript/lib/tsc.js:6:13\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:643:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.18.0\n"
+    }
+  ],
+  "status": "STOPPED",
+  "blocker": "VERIFICATION_FAILED_NO_COMMIT"
+}
