@@ -17,26 +17,26 @@ const jobSchema = z.strictObject({ job_id: z.string().min(1).max(160) });
 const resultSchema = z.strictObject({ job_id: z.string().min(1).max(160),
   stream: z.enum(['summary', 'stdout', 'stderr']).optional(), cursor: z.string().max(2048).optional(),
   limit: z.number().int().min(256).max(65536).optional() });
-async function result(call: () => Promise<unknown>) {
+async function result(call: () => Promise<unknown>, context: 'read' | 'publication' = 'read') {
   try {
     const text = JSON.stringify(await call());
     if (Buffer.byteLength(text) > 512 * 1024) fail('OUTPUT_TOO_LARGE');
     return { content: [{ type: 'text' as const, text }] };
   }
-  catch (error) { return { isError: true, content: [{ type: 'text' as const, text: JSON.stringify({ error: safeError(error) }) }] }; }
+  catch (error) { return { isError: true, content: [{ type: 'text' as const, text: JSON.stringify({ error: safeError(error, context) }) }] }; }
 }
 export function createMcpServer(service: DriveWorkerService, principal: Principal) {
-  const server = new McpServer({ name: 'drive-worker-mcp', version: '0.1.0-dev3' });
+  const server = new McpServer({ name: 'drive-worker-mcp', version: '0.1.0-dev4' });
   server.registerTool('publish_manual_command', {
     description: 'Publish a command JSON only to your bound manual folder. Does not execute or move it. job_id must contain MANUAL. Requires manual:publish.',
     inputSchema: commandSchema,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true }
-  }, args => result(() => service.publishManual(principal, args)));
+  }, args => result(() => service.publishManual(principal, args), 'publication'));
   server.registerTool('submit_direct_command', {
     description: 'Submit a NEW command directly to your bound Commands folder for your existing Worker to execute. This can run a shell command and have external effects. Submission does not guarantee execution. Requires jobs:submit. Cancelling the MCP request does not cancel the Worker command.',
     inputSchema: commandSchema,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: true }
-  }, args => result(() => service.submitDirect(principal, args)));
+  }, args => result(() => service.submitDirect(principal, args), 'publication'));
   server.registerTool('get_job_status', {
     description: 'Read the exact job Result in your bound Results folder. Missing results do not mean success or failure and must not cause resubmission. Requires jobs:read.',
     inputSchema: jobSchema,

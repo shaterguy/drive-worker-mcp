@@ -1,4 +1,4 @@
-# DriveWorker MCP v0.1.0-dev3
+# DriveWorker MCP v0.1.0-dev4
 
 Independent MCP service for an existing DriveWorker. This development candidate is not a deployed, connected, or user-ready service.
 
@@ -30,6 +30,10 @@ Routed Worker copies must prove their relationship to the original publication u
 Limits: command JSON 256 KiB, Result JSON 1 MiB, full log download 8 MiB by default (operator-configurable to at most 32 MiB), page text 64 KiB. Summary tails are at most 16 KiB each and are omitted from log pages. Error/reason text is also omitted from log pages. The tool's JSON text payload is capped at 512 KiB; its MCP JSON transport envelope is bounded below 1 MiB. Page `limit` refers to UTF-8 log text bytes, not framing metadata. Log downloads are counted while streaming, then sanitized before pagination. Oversize logs return a specific error instead of partial success. Signed cursors are tenant/job/stream/file/content-bound. A cursor signing key must be provided through approved platform secret storage and kept stable across instances. No insecure default or per-process key generation is allowed.
 
 Known service credentials and common token/password/private-key/connection-string patterns must be redacted. Pattern matching cannot detect every arbitrary user-defined secret. Commands and logs should never contain credentials. The service returns only whitelisted Result fields and never raw upstream error bodies, request headers, env, stdin, or command text.
+
+## Upstream error guidance
+
+Google failures return fixed categories, read-only retry guidance and, when available, an app-generated correlation ID. Unknown or malformed 403 responses do not imply lost permissions. Both publication tools set retryable to false for these upstream errors: inspect the existing job and reconcile only the identical job ID, normalized body and route. Never allocate a new job to recover a lookup failure. The [upstream diagnostic contract](UPSTREAM-ERRORS.md) defines the bounded reason allowlist, private-data exclusions and limitations.
 
 ## Development and verification
 

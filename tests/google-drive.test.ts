@@ -38,7 +38,7 @@ test('only transient statuses retry and Retry-After is respected without logging
   const denied = new GoogleDrive({ getAccessToken: async () => 'fixture-token', fetch: async () => new Response('private-upstream-body', { status: 403 }) });
   await assert.rejects(denied.getMetadata('file-id'), (e: unknown) => {
     assert.equal(String(e).includes('private-upstream-body'), false);
-    return !!e && typeof e === 'object' && 'code' in e && e.code === 'DRIVE_PERMISSION_DENIED';
+    return !!e && typeof e === 'object' && 'code' in e && e.code === 'UPSTREAM_FORBIDDEN_UNKNOWN';
   });
 });
 test('exact-name query handles pagination and preserves duplicates rather than selecting latest', async () => {

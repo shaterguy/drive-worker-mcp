@@ -134,6 +134,7 @@ export class DriveWorkerService {
       }
       if (!meta && createError instanceof ServiceError && ['GOOGLE_REAUTH_REQUIRED', 'INSUFFICIENT_SCOPE',
         'DRIVE_PERMISSION_DENIED', 'UPSTREAM_RATE_LIMITED'].includes(createError.code)) throw createError;
+      if (!meta && createError instanceof ServiceError) throw new ServiceError('SUBMISSION_OUTCOME_UNKNOWN', createError.upstream);
       if (!fileInFolder(meta, folderId, `${pub.jobId}.json`, true) || meta.id !== pub.fileId || !meta.createdTime
         || !Number.isFinite(Date.parse(meta.createdTime))) fail('SUBMISSION_OUTCOME_UNKNOWN');
       const text = await this.stableRead(drive, meta, LIMITS.commandBytes, 'SUBMISSION_OUTCOME_UNKNOWN');
@@ -144,7 +145,7 @@ export class DriveWorkerService {
       try { await this.deps.store.setPublicationState(p.accountId, pub.jobId, 'UNKNOWN'); } catch { /* Preserve the original durable reservation. */ }
       if (e instanceof ServiceError && ['GOOGLE_REAUTH_REQUIRED', 'INSUFFICIENT_SCOPE',
         'DRIVE_PERMISSION_DENIED', 'UPSTREAM_RATE_LIMITED'].includes(e.code)) throw e;
-      fail('SUBMISSION_OUTCOME_UNKNOWN');
+      throw new ServiceError('SUBMISSION_OUTCOME_UNKNOWN', e instanceof ServiceError ? e.upstream : undefined);
     }
   }
   text(value: unknown, max = 16384): string | null {
