@@ -73,7 +73,8 @@ export function createAuthOptions(config: AuthConfig, database: NonNullable<Bett
         allowUnauthenticatedClientRegistration: false,
         clientRegistrationRequirePKCE: true,
         storeTokens: 'hashed',
-        refreshTokenReuseInterval: 0,
+        // Recover duplicate refreshes/lost responses without minting another token pair.
+        refreshTokenReuseInterval: 30,
         accessTokenExpiresIn: 300,
         refreshTokenExpiresIn: 7 * 24 * 60 * 60,
         codeExpiresIn: 120,

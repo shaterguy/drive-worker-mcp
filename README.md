@@ -1,4 +1,4 @@
-# DriveWorker MCP v0.1.0-dev4
+# DriveWorker MCP v0.1.0-dev5
 
 Independent MCP service for an existing DriveWorker. This development candidate is not a deployed, connected, or user-ready service.
 
@@ -34,6 +34,10 @@ Known service credentials and common token/password/private-key/connection-strin
 ## Upstream error guidance
 
 Google failures return fixed categories, read-only retry guidance and, when available, an app-generated correlation ID. Unknown or malformed 403 responses do not imply lost permissions. Both publication tools set retryable to false for these upstream errors: inspect the existing job and reconcile only the identical job ID, normalized body and route. Never allocate a new job to recover a lookup failure. The [upstream diagnostic contract](UPSTREAM-ERRORS.md) defines the bounded reason allowlist, private-data exclusions and limitations.
+
+## Refresh recovery
+
+Same-token refreshes are serialized across instances and exact retries within 30 seconds receive the maintained encrypted replay response. Queue/lock waits expire before auth processing. Client/scope/resource checks and explicit revocation remain enforced. See [refresh recovery](REFRESH-RECOVERY.md).
 
 ## Development and verification
 

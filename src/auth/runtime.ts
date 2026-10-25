@@ -12,6 +12,7 @@ import { PostgresStore } from '../postgres-store.ts';
 import { DriveWorkerService } from '../service.ts';
 import { handleMcpRequest } from '../mcp.ts';
 import { ServiceError } from '../errors.ts';
+import { createRefreshHandler } from './refresh.ts';
 
 /** Exact external surface. Server-only auth.api helpers are never blanket-mounted. */
 const AUTH_METHODS: Readonly<Record<string,readonly string[]>> = Object.freeze({
@@ -64,7 +65,8 @@ export function createRuntime(config: AuthConfig, pool: Pool, cursorKey: Uint8Ar
     return handleMcpRequest(request,principal,service);
   });
   const ui = createUi(auth,config,connections);
-  return { auth, authority, connections, fetch:createRuntimeRouter(config,{auth,ui,mcp}) };
+  const orderedAuth={handler:createRefreshHandler(pool,request=>auth.handler(request))};
+  return { auth, authority, connections, fetch:createRuntimeRouter(config,{auth:orderedAuth,ui,mcp}) };
 }
 
 /** The same router is dependency-injected for secret-free boundary fixtures. */

@@ -1,0 +1,11 @@
+# Refresh recovery in v0.1.0-dev5
+
+MCP refresh requests for the same token are ordered with a PostgreSQL transaction advisory lock. This closes the provider's gap between consuming a refresh token and saving its encrypted replay response, including across Vercel instances. A bounded per-runtime queue reserves at most one of the three pool connections; other connections remain available to the maintained auth handler. Queue/lock wait is limited to five seconds before entering the handler. An expired wait fails with the existing sanitized AUTH_UNAVAILABLE response rather than invoking an old refresh after the overlap window.
+
+The lock transaction locally disables idle-in-transaction expiry because it is intentionally idle while auth uses other connections. COMMIT/ROLLBACK releases the lock, transaction pooling is supported, and connection failures discard the client. The lock key is a namespaced SHA-256 projection to signed 64 bits; raw tokens never enter SQL or logs. No schema, grant, folder, Google scope, access-token lifetime, or signing-secret changes are required.
+
+The maintained Better Auth provider now permits an exact duplicate refresh for 30 seconds and replays the same encrypted response. Client authentication, effective scopes, resources and sender constraint must match. It does not mint another token pair for a retry. Reuse beyond 30 seconds retains the provider's family-invalidation policy. The app's per-request/per-tool live grant/session/consent checks and explicit disconnect remain in force. Previously revoked grants are never reactivated.
+
+In-process caching alone would not cover different instances; a grace interval alone leaves a simultaneous CAS-loser gap. The combination uses the existing PostgreSQL store and provider rather than implementing another token issuer. The PostgreSQL lock cannot survive a lost database connection; the handler detects loss and withholds success, and the maintained overlap remains the recovery path for a response lost after minting.
+
+Verification uses synthetic provider credentials and separate lock fixtures; production tokens are never exported or replayed for a test. Existing connected-job reads verify the deployed user path. See the test files for the exact covered behavior and the deployment commit for source identity.
