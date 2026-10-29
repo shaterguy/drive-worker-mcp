@@ -97,7 +97,7 @@ export class PostgresAuthAuthority {
     if (result.rows.length !== 1) throw new AuthBoundaryError('AUTH_REQUIRED');
   }
 
-  async #requireConsent(db: Queryable, userId: string, clientId: string, referenceId: string, scopes: readonly string[]): Promise<void> {
+  async #requireConsent(db: Queryable, userId: string, clientId: string, referenceId: string, scopes: readonly string[]): Promise<boolean> {
     const result = await db.query<{ scopes: unknown; resources: unknown }>(
       `SELECT c.scopes,c.resources FROM "oauthConsent" c JOIN "oauthClient" p ON p."clientId"=c."clientId"
        WHERE c."userId"=$1 AND c."clientId"=$2 AND c."referenceId"=$3 AND p.disabled IS NOT TRUE LIMIT 2`,
@@ -106,6 +106,7 @@ export class PostgresAuthAuthority {
     const row = result.rows[0]!;
     if (!readStoredList(row.resources).includes(this.#resource) ||
         !scopes.every(scope => readStoredList(row.scopes).includes(scope))) throw new AuthBoundaryError('INSUFFICIENT_SCOPE');
+    return readStoredList(row.scopes).includes('offline_access');
   }
 
   async issueClaims(input: ClaimInput): Promise<Record<string, string>> {
@@ -116,10 +117,12 @@ export class PostgresAuthAuthority {
       await client.query('BEGIN');
       // Existing folder bindings bypass setup, so token issuance must independently enforce readiness.
       await this.#requireGoogleGrant(client,tenant);
-      await this.#requireConsent(client, input.userId, input.clientId, input.referenceId, input.scopes);
-      // referenceId is the original session ID. FK cleanup may null refresh.sessionId;
-      // it must not turn a session-bound grant into an unbounded offline grant.
-      await this.#requireSession(client, input.userId, input.referenceId);
+      const offline = await this.#requireConsent(client, input.userId, input.clientId, input.referenceId, input.scopes);
+      // Durable offline consent outlives the browser session. Initial code exchange
+      // and online-only grants still require it; referenceId remains the grant lineage.
+      if (input.grantType === 'authorization_code' || !offline) {
+        await this.#requireSession(client, input.userId, input.referenceId);
+      }
       if (input.sessionId && input.sessionId !== input.referenceId) throw new AuthBoundaryError('AUTH_REQUIRED');
       if (input.grantType === 'authorization_code') {
         if (!input.sessionId || input.referenceId !== input.sessionId) throw new AuthBoundaryError('AUTH_REQUIRED');
@@ -152,7 +155,7 @@ export class PostgresAuthAuthority {
     const scopes = new Set<ToolScope>(TOOL_SCOPES.filter(scope => signedScopes.includes(scope)));
     const principal: Principal = Object.freeze({ accountId, grantId, clientId, scopes });
     const proof: Proof = { userId: text(claims.sub), referenceId, expiresAt: claims.exp * 1000, scopes: [...scopes] };
-    if (claims.sid !== undefined) {
+    if (claims.sid !== undefined && claims.sid !== null) {
       proof.sessionId = text(claims.sid);
       if (proof.sessionId !== referenceId) throw new AuthBoundaryError('AUTH_REQUIRED');
     }
@@ -180,7 +183,7 @@ export class PostgresAuthAuthority {
         [principal.grantId,principal.accountId,principal.clientId,proof.referenceId]);
       if (grants.rows.length !== 1) throw new AuthBoundaryError('AUTH_REQUIRED');
     });
-    await observePrincipalRead(diagnostic,'consent',()=>this.#requireConsent(this.#pool,proof.userId,principal.clientId,proof.referenceId,proof.scopes));
-    await observePrincipalRead(diagnostic,'session',()=>this.#requireSession(this.#pool,proof.userId,proof.referenceId));
+    const offline = await observePrincipalRead(diagnostic,'consent',()=>this.#requireConsent(this.#pool,proof.userId,principal.clientId,proof.referenceId,proof.scopes));
+    if (!offline) await observePrincipalRead(diagnostic,'session',()=>this.#requireSession(this.#pool,proof.userId,proof.referenceId));
   }
 }

@@ -43,6 +43,22 @@ test('expired or deleted reference session cannot be bypassed by a missing sid',
   await assert.rejects(authority.principalFromVerifiedClaims({...claims,sid:undefined}));
   state.session=true;await assert.rejects(authority.principalFromVerifiedClaims({...claims,sid:'different-session'}));
 });
+test('offline consent keeps existing tokens usable after browser session expiry or deletion',async()=>{
+  const {authority,claims,state}=fixture();state.scopes.push('offline_access');state.session=false;
+  assert.equal((await authority.principalFromVerifiedClaims({...claims,scope:'jobs:read offline_access'})).accountId,'tenant-a');
+  const principal=await authority.principalFromVerifiedClaims({...claims,sid:undefined});
+  await authority.assertActiveGrant(principal);
+  await authority.principalFromVerifiedClaims({...claims,sid:null});
+  state.scopes=['jobs:read'];await assert.rejects(authority.assertActiveGrant(principal));
+});
+test('offline consent never bypasses revocation, lost consent, Google readiness or sid lineage',async()=>{
+  const {authority,claims,state}=fixture();state.scopes.push('offline_access');state.session=false;
+  const principal=await authority.principalFromVerifiedClaims(claims);
+  state.revoked=true;await assert.rejects(authority.assertActiveGrant(principal));state.revoked=false;
+  state.consent=false;await assert.rejects(authority.assertActiveGrant(principal));state.consent=true;
+  state.hasRefresh=false;await assert.rejects(authority.assertActiveGrant(principal));state.hasRefresh=true;
+  await assert.rejects(authority.principalFromVerifiedClaims({...claims,sid:'different-session'}));
+});
 test('arbitrary principal and later scope mutation cannot acquire authority',async()=>{
   const {authority,claims}=fixture();
   await assert.rejects(authority.assertActiveGrant({accountId:'tenant-a',grantId:'grant-a',clientId:'client-a',scopes:new Set(['jobs:read'])}));
@@ -61,13 +77,13 @@ test('existing usable app token stops when stored Google readiness is lost',asyn
 
 function issuanceFixture() {
   const tenant={id:'tenant-a',better_auth_user_id:'user-a',better_auth_account_id:'account-a',google_sub:'google-a'};
-  const state={hasRefresh:true,googleScopes:GOOGLE_SCOPES.join(','),inserts:0,rollbacks:0};
+  const state={hasRefresh:true,googleScopes:GOOGLE_SCOPES.join(','),inserts:0,rollbacks:0,session:true,consentScopes:['jobs:read']};
   const query=async(sql:string)=>{
     if(sql.includes('SELECT id, "accountId"'))return {rows:[{id:'account-a',accountId:'google-a'}]};
     if(sql.includes('INSERT INTO dw_mcp_tenants') || sql.includes('JOIN "account"'))return {rows:[tenant]};
     if(sql.includes('AS has_refresh'))return {rows:[{has_refresh:state.hasRefresh,scope:state.googleScopes}]};
-    if(sql.includes('FROM "oauthConsent"'))return {rows:[{scopes:['jobs:read'],resources:[resource]}]};
-    if(sql.includes('FROM "session"'))return {rows:[{id:'session-a'}]};
+    if(sql.includes('FROM "oauthConsent"'))return {rows:[{scopes:state.consentScopes,resources:[resource]}]};
+    if(sql.includes('FROM "session"'))return {rows:state.session?[{id:'session-a'}]:[]};
     if(sql.includes('INSERT INTO dw_mcp_grants')){state.inserts++;return {rows:[]};}
     if(sql.includes('FROM dw_mcp_grants'))return {rows:[{id:'grant-a',tenant_id:'tenant-a',client_id:'client-a',reference_id:'session-a',revoked_at:null}]};
     if(sql==='ROLLBACK')state.rollbacks++;
@@ -85,6 +101,15 @@ test('first missing refresh and existing-binding partial scopes block issuance b
     state.googleScopes=scopes;await assert.rejects(authority.issueClaims(input),{message:'GOOGLE_REAUTH_REQUIRED'});
   }
   assert.equal(state.inserts,0);assert.equal(state.rollbacks,4);
+});
+test('offline refresh survives deleted original session while initial code and online refresh still require it',async()=>{
+  const {state,authority,input}=issuanceFixture();state.session=false;state.consentScopes.push('offline_access');
+  await authority.issueClaims({...input,grantType:'refresh_token',sessionId:undefined});
+  assert.equal(state.inserts,0);
+  await assert.rejects(authority.issueClaims(input));
+  await assert.rejects(authority.issueClaims({...input,grantType:'refresh_token',sessionId:'wrong-session'}));
+  state.consentScopes=['jobs:read'];
+  await assert.rejects(authority.issueClaims({...input,grantType:'refresh_token',sessionId:undefined}));
 });
 test('same-account preserved stored refresh plus both scopes allows a new session grant',async()=>{
   const {state,authority,input}=issuanceFixture();
