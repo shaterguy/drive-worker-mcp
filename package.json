@@ -1,6 +1,6 @@
 {
   "name": "drive-worker-mcp",
-  "version": "0.1.0-dev6",
+  "version": "0.1.0-dev7",
   "private": true,
   "type": "module",
   "engines": {
