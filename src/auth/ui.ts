@@ -8,7 +8,7 @@ import { initialFolderInputs } from './owner-prefill.ts';
 
 const escape = (value: unknown): string => String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]!));
 const labels: Record<string,string> = {
-  openid: 'Confirm your signed-in identity', offline_access: 'Reconnect for up to the current 7-day session',
+  openid: 'Confirm your signed-in identity', offline_access: 'Keep this connection active with automatic renewal',
   'manual:publish': 'Save a manual command without executing it',
   'jobs:submit': 'Submit a direct command to your DriveWorker',
   'jobs:read': 'Read job status and bounded result/log content',
@@ -32,7 +32,7 @@ function page(title: string, content: string, oauthQuery = ''): Response {
   }));`;
   return noStore(new Response(`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(title)}</title>
     <body><main><h1>${escape(title)}</h1>${content}<p id="status" role="status"></p>
-    <p>Connections expire when the original session expires (up to 7 days). Sign in again with the same Google account to recover your saved folder settings. After disconnecting, sign out and sign in again before reconnecting.</p></main>
+    <p>Connections with offline access renew automatically during use, independently of the browser session. An unused connection expires after 90 days. Disconnect revokes access immediately. Google may require consent again if its authorization expires or is revoked. Saved folder settings are preserved.</p></main>
     <script nonce="${nonce}">${script}</script></body></html>`, { headers: {
       'Content-Type':'text/html; charset=utf-8',
       'Content-Security-Policy':`default-src 'none'; script-src 'nonce-${nonce}'; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`,

@@ -27,7 +27,7 @@ async function result(call: () => Promise<unknown>, context: 'read' | 'publicati
   catch (error) { return { isError: true, content: [{ type: 'text' as const, text: JSON.stringify({ error: safeError(error, context) }) }] }; }
 }
 export function createMcpServer(service: DriveWorkerService, principal: Principal) {
-  const server = new McpServer({ name: 'drive-worker-mcp', version: '0.1.0-dev5' });
+  const server = new McpServer({ name: 'drive-worker-mcp', version: '0.1.0-dev6' });
   server.registerTool('publish_kb_manual_request', {
     description: 'Create a KB Securities account-query or buy/sell/cancel order command JSON in the authenticated user manual-review Drive folder. The server builds the fixed Python command from structured business fields. A user must review and move the file to Commands before the tablet can call KB Securities. This tool only publishes the file and cannot execute or move it. publication-test publishes a harmless print command. Requires manual:publish.',
     inputSchema: kbManualSchema,

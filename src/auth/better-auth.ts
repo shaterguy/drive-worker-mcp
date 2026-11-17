@@ -76,7 +76,8 @@ export function createAuthOptions(config: AuthConfig, database: NonNullable<Bett
         // Recover duplicate refreshes/lost responses without minting another token pair.
         refreshTokenReuseInterval: 30,
         accessTokenExpiresIn: 300,
-        refreshTokenExpiresIn: 7 * 24 * 60 * 60,
+        // Rotated from the current time on every refresh, not from browser sign-in.
+        refreshTokenExpiresIn: 90 * 24 * 60 * 60,
         codeExpiresIn: 120,
         postLogin: {
           page: '/connect',

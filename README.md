@@ -1,6 +1,6 @@
-# DriveWorker MCP v0.1.0-dev5
+# DriveWorker MCP v0.1.0-dev6
 
-Independent MCP service for an existing DriveWorker. This development candidate is not a deployed, connected, or user-ready service.
+Independent MCP service for an existing DriveWorker. This branch updates the existing deployed service; deployment and live verification evidence are recorded for the exact release commit.
 
 ## Contract
 
