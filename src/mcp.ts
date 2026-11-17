@@ -1,11 +1,12 @@
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
+import { kbManualSchema, buildKbManualCommand } from './kb-manual.ts';
 import type { Principal, ToolScope } from './contracts.ts';
 import { DriveWorkerService } from './service.ts';
 import { fail, safeError } from './errors.ts';
 
 export const TOOL_REQUIRED_SCOPE: Readonly<Record<string, ToolScope>> = Object.freeze({
-  publish_manual_command: 'manual:publish', submit_direct_command: 'jobs:submit',
+  publish_kb_manual_request: 'manual:publish', publish_manual_command: 'manual:publish', submit_direct_command: 'jobs:submit',
   get_job_status: 'jobs:read', get_job_result: 'jobs:read'
 });
 
@@ -27,6 +28,11 @@ async function result(call: () => Promise<unknown>, context: 'read' | 'publicati
 }
 export function createMcpServer(service: DriveWorkerService, principal: Principal) {
   const server = new McpServer({ name: 'drive-worker-mcp', version: '0.1.0-dev5' });
+  server.registerTool('publish_kb_manual_request', {
+    description: 'Create a KB Securities account-query or buy/sell/cancel order command JSON in the authenticated user manual-review Drive folder. The server builds the fixed Python command from structured business fields. A user must review and move the file to Commands before the tablet can call KB Securities. This tool only publishes the file and cannot execute or move it. publication-test publishes a harmless print command. Requires manual:publish.',
+    inputSchema: kbManualSchema,
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true }
+  }, args => result(() => service.publishManual(principal, buildKbManualCommand(args)), 'publication'));
   server.registerTool('publish_manual_command', {
     description: 'Publish a command JSON only to your bound manual folder. Does not execute or move it. job_id must contain MANUAL. Requires manual:publish.',
     inputSchema: commandSchema,

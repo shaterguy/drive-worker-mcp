@@ -6,7 +6,7 @@ import { DriveWorkerService } from '../src/service.ts';
 import { FakeDrive, FakeStore } from './fakes.ts';
 import type { Principal, ToolScope } from '../src/contracts.ts';
 
-test('official SDK negotiates and serves exactly the four tools with fail-closed schema and grant gates', async () => {
+test('official SDK negotiates and serves the registered tools with fail-closed schema and grant gates', async () => {
   const store = new FakeStore(), drive = new FakeDrive();
   store.bindings.set('a', { accountId: 'a', manualFolderId: 'manual', commandsFolderId: 'commands', resultsFolderId: 'results' });
   for (const id of ['manual', 'commands', 'results']) drive.folder(id);
@@ -23,7 +23,7 @@ test('official SDK negotiates and serves exactly the four tools with fail-closed
   try {
     await client.connect(transport);
     const listed = await client.listTools();
-    assert.deepEqual(listed.tools.map(t => t.name).sort(), ['get_job_result', 'get_job_status', 'publish_manual_command', 'submit_direct_command']);
+    assert.deepEqual(listed.tools.map(t => t.name).sort(), ['get_job_result', 'get_job_status', 'publish_kb_manual_request', 'publish_manual_command', 'submit_direct_command']);
     const args = { job_id: 'MANUAL-SDK', command: 'printf harmless', cwd: '/tmp', timeout_ms: 1000 };
     const manual = await client.callTool({ name: 'publish_manual_command', arguments: args });
     assert.notEqual(manual.isError, true); assert.deepEqual(drive.writes, ['manual']);
