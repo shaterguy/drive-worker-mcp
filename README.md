@@ -37,7 +37,7 @@ Google failures return fixed categories, read-only retry guidance and, when avai
 
 ## Refresh recovery
 
-Same-token refreshes are serialized across instances and exact retries within 30 seconds receive the maintained encrypted replay response. Queue/lock waits expire before auth processing. Client/scope/resource checks and explicit revocation remain enforced. See [refresh recovery](REFRESH-RECOVERY.md).
+Same-token refreshes are serialized across instances and exact retries within 30 seconds receive the maintained encrypted replay response. Queue/lock waits expire before auth processing. Client/scope/resource checks and explicit revocation remain enforced. The access token lifetime is 30 minutes. The upgrade SQL and the OAuth outcome counters are described in [refresh recovery](REFRESH-RECOVERY.md).
 
 ## Development and verification
 

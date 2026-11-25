@@ -63,7 +63,7 @@ test('maintained rotation and signed app authority outlive session expiry/deleti
     const rotate = async (token: string) => {
       const response = await refresh(token);
       assert.equal(response.status, 200, await response.clone().text());
-      return response.json() as Promise<{ access_token: string; refresh_token: string }>;
+      return response.json() as Promise<{ access_token: string; refresh_token: string; expires_in: number }>;
     };
     const principal = async (token: string) => {
       const response = await auth.handler(new Request(`${config.issuer}/jwks`));
@@ -77,6 +77,8 @@ test('maintained rotation and signed app authority outlive session expiry/deleti
     await query('UPDATE "session" SET "expiresAt"=now()-interval \'1 day\' WHERE id=$1', [session.id]);
     const expiredSessionPair = await rotate(initialToken);
     const expiredSessionPrincipal = await principal(expiredSessionPair.access_token);
+    assert.equal(expiredSessionPair.expires_in, 30 * 60);
+    assert.equal(expiredSessionPrincipal.claims.exp! - expiredSessionPrincipal.claims.iat!, 30 * 60);
     assert.equal(expiredSessionPrincipal.claims.sid, session.id);
     const ttl = await query('SELECT EXTRACT(EPOCH FROM ("expiresAt"-"createdAt")) AS seconds FROM "oauthRefreshToken" WHERE revoked IS NULL');
     assert.equal(Number(ttl.rows[0]!.seconds), 90 * 24 * 60 * 60);

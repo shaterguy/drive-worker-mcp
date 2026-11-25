@@ -1,5 +1,7 @@
 # Boundary diagnostics, v0.1.0-dev2
 
+The sections below describe the original dev2 rollout. Current builds also classify the revocation endpoint and distinguish code exchanges from refreshes. For the schema and retention of OAuth outcome counts, see [Refresh recovery](REFRESH-RECOVERY.md).
+
 ## Candidate status
 
 This source candidate adds bounded request-local observations to the existing authentication boundary. It does not establish the cause of the earlier parallel-query failures. The approved isolated MANUAL Termux RED completed with exit 1: the unchanged baseline lacks the new diagnostic module and runtime-router export. Both test hashes and preservation of the original checkout were confirmed. The first isolated GREEN attempt reported 92/96 passing with all three TypeScript stages passing and the original checkout preserved. Three new boundary subtests (plus their parent) failed because the fixture sent malformed authorization instead of omitting the header, and its synthetic token endpoint omitted the maintained form-media declaration. This revision corrects only that test file and this status note; production and version files are unchanged. It retains a separate malformed-authorization assertion. The revised full GREEN remains pending. No product test or build was run in the artifact-preparation environment.

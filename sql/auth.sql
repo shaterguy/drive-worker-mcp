@@ -31,7 +31,8 @@ BEGIN
   IF r IS NULL THEN RETURN; END IF;
   INSERT INTO dw_mcp_grants(id,tenant_id,client_id,reference_id,revoked_at)
     SELECT gen_random_uuid()::text,id,c,r,now() FROM dw_mcp_tenants WHERE better_auth_user_id=u
-    ON CONFLICT(tenant_id,client_id,reference_id) DO UPDATE SET revoked_at=COALESCE(dw_mcp_grants.revoked_at,now());
+    ON CONFLICT(tenant_id,client_id,reference_id) DO UPDATE SET revoked_at=EXCLUDED.revoked_at
+    WHERE dw_mcp_grants.revoked_at IS NULL;
 END; $$;
 
 CREATE OR REPLACE FUNCTION dw_mcp_consent_revoked() RETURNS TRIGGER LANGUAGE plpgsql AS $$
@@ -97,8 +98,23 @@ BEGIN
 END; $$;
 CREATE TRIGGER dw_mcp_refresh_revoke AFTER UPDATE OF revoked ON "oauthRefreshToken"
   FOR EACH ROW EXECUTE FUNCTION dw_mcp_refresh_revoked();
+-- A family-wide delete can remove many unexpired rotations of the same grant.
+CREATE OR REPLACE FUNCTION dw_mcp_refresh_rows_deleted()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+DECLARE family RECORD;
+BEGIN
+  FOR family IN
+    SELECT DISTINCT "userId", "clientId", "referenceId" FROM deleted_refresh_rows
+    WHERE "expiresAt" > now() AND "referenceId" IS NOT NULL
+    ORDER BY "userId", "clientId", "referenceId"
+  LOOP
+    PERFORM dw_mcp_tombstone_grant(family."userId", family."clientId", family."referenceId");
+  END LOOP;
+  RETURN NULL;
+END; $$;
 CREATE TRIGGER dw_mcp_refresh_delete AFTER DELETE ON "oauthRefreshToken"
-  FOR EACH ROW EXECUTE FUNCTION dw_mcp_refresh_revoked();
+  REFERENCING OLD TABLE AS deleted_refresh_rows
+  FOR EACH STATEMENT EXECUTE FUNCTION dw_mcp_refresh_rows_deleted();
 
 CREATE OR REPLACE FUNCTION dw_mcp_reject_revoked_refresh() RETURNS TRIGGER LANGUAGE plpgsql AS $$
 DECLARE grant_row dw_mcp_grants%ROWTYPE;

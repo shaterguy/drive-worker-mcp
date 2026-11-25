@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { setImmediate as nextTurn } from 'node:timers/promises';
 import { EventEmitter } from 'node:events';
 import type { Pool } from 'pg';
+import { beginRequestDiagnostics } from '../src/auth/request-diagnostics.ts';
 import { createRefreshHandler } from '../src/auth/refresh.ts';
 
 function request(token='synthetic-refresh',extra:Record<string,string>={}) {
@@ -134,4 +135,25 @@ test('a request whose deadline expires while acquiring the lock never enters aut
   await assert.rejects(handler(request()),{message:'AUTH_UNAVAILABLE'});
   assert.equal(called,0);assert.equal(db.counts().connected,0);
   assert.equal(db.queries.at(-1)?.sql,'ROLLBACK');
+});
+
+
+test('token diagnostics use fixed operation labels and never emit form data',async()=>{
+  const db=database();
+  const handle=createRefreshHandler(db.pool,async()=>new Response(null,{status:400}));
+  for(const [grantType,phase] of [['authorization_code','oauth_code'],['refresh_token','oauth_refresh'],
+    ['synthetic-private-grant','oauth_token']] as const){
+    const req=request('synthetic-private-token',{grant_type:grantType,code:'synthetic-private-code'});
+    const lines:string[]=[];
+    const trace=beginRequestDiagnostics(new URL(req.url).pathname,{sink:line=>{lines.push(line);}});
+    assert.ok(trace);
+    trace.markPhase('oauth_token');
+    const response=await handle(req,trace);
+    trace.finish(response.status);
+    assert.equal(response.status,400);
+    assert.equal(lines.length,1);
+    assert.equal(JSON.parse(lines[0]!).phase,phase);
+    assert.equal(JSON.parse(lines[0]!).outcome,'request_rejected');
+    assert.doesNotMatch(lines[0]!,/synthetic/i);
+  }
 });

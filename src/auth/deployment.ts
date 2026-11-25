@@ -1,3 +1,4 @@
+import type { OAuthOutcomeWriter } from './oauth-outcome-counts.ts';
 import { AuthBoundaryError, GOOGLE_CALLBACK_PATH, loadAuthConfig, type AuthConfig } from './config.ts';
 import { assertRequestOrigin, noStore } from './request-guards.ts';
 import { beginRequestDiagnostics, type DiagnosticOptions, type PoolCounts, type RequestDiagnostics } from './request-diagnostics.ts';
@@ -5,6 +6,7 @@ import { beginRequestDiagnostics, type DiagnosticOptions, type PoolCounts, type 
 export interface MountedRuntime {
   fetch(request: Request, diagnostic?: RequestDiagnostics): Promise<Response>;
   poolCounts?: () => PoolCounts;
+  recordOAuthOutcome?: OAuthOutcomeWriter;
   checkDatabase(): Promise<void>;
 }
 interface DeploymentOptions {
@@ -84,6 +86,13 @@ export function createDeployment(options: DeploymentOptions) {
     const diagnostic=beginRequestDiagnostics(new URL(request.url).pathname,options.diagnostics);
     let status=503;
     try { const response=await handle(request,diagnostic);status=response.status;return response; }
-    finally { diagnostic?.finish(status); }
+    finally {
+      diagnostic?.finish(status);
+      const operation=diagnostic?.oauthOperation(status);
+      if (operation && mounted?.recordOAuthOutcome) {
+        try { await mounted.recordOAuthOutcome(operation,status); }
+        catch { /* Counter storage cannot change the original OAuth response. */ }
+      }
+    }
   } };
 }
