@@ -1,5 +1,5 @@
 import type { Pool } from 'pg';
-import { createAuth, accessTokenForTenant, type DriveWorkerAuth } from './better-auth.ts';
+import { createAuth, accessTokenForTenant } from './better-auth.ts';
 import type { RequestDiagnostics } from './request-diagnostics.ts';
 import { PostgresAuthAuthority } from './authority.ts';
 import { Connections } from './connections.ts';
@@ -71,7 +71,7 @@ export function createRuntime(config: AuthConfig, pool: Pool, cursorKey: Uint8Ar
 
 /** The same router is dependency-injected for secret-free boundary fixtures. */
 export function createRuntimeRouter(config: AuthConfig, handlers: {
-  auth: Pick<DriveWorkerAuth,'handler'>;
+  auth: { handler: (request: Request, diagnostic?: RequestDiagnostics) => Promise<Response> };
   ui: (request: Request) => Promise<Response>;
   mcp: (request: Request, diagnostic?: RequestDiagnostics) => Promise<Response>;
 }) {
@@ -89,7 +89,8 @@ export function createRuntimeRouter(config: AuthConfig, handlers: {
         if (!methods.includes(request.method)) return noStore(new Response(null,{status:405,headers:{Allow:methods.join(', ')}}));
         const bounded=await boundedRequest(request,65536);
         if (path==='/api/auth/oauth2/token') diagnostic?.markPhase('oauth_token');
-        return noStore(await handlers.auth.handler(bounded));
+        if (path==='/api/auth/oauth2/revoke') diagnostic?.markPhase('oauth_revoke');
+        return noStore(await handlers.auth.handler(bounded,diagnostic));
       }
       if (['/sign-in','/connect','/consent'].includes(path) || path.startsWith('/ui/')) return noStore(await handlers.ui(request));
       return noStore(Response.json({error:'NOT_FOUND'},{status:404}));

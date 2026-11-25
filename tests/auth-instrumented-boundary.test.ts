@@ -8,6 +8,7 @@ import { APIError, createAuthEndpoint } from 'better-auth/api';
 import { memoryAdapter } from 'better-auth/adapters/memory';
 import { createSchemaOptions } from '../scripts/schema-config.ts';
 import { createDeployment } from '../src/auth/deployment.ts';
+import { createRefreshHandler } from '../src/auth/refresh.ts';
 import { createRuntimeRouter } from '../src/auth/runtime.ts';
 import { protectMcpRoute } from '../src/auth/protected-mcp.ts';
 import { PostgresAuthAuthority, TENANT_CLAIM, GRANT_CLAIM, REFERENCE_CLAIM } from '../src/auth/authority.ts';
@@ -35,10 +36,11 @@ function mcpRequest(bearer=token(),name='get_job_status',suffix='') {
   body:JSON.stringify({jsonrpc:'2.0',id:sentinel,method:'tools/call',params:{name,arguments:{job_id:sentinel}}})});
 }
 type TokenMode='success'|'failure'|'unauthorized'|'forbidden'|'redirect';
-function fixture(options:{failure?:PrincipalRead;failOnlyB?:boolean;throwSink?:boolean;throwSnapshot?:boolean}={}) {
-  const lines:string[]=[];let queries=0,executions=0,mode:TokenMode='success';
+function fixture(options:{failure?:PrincipalRead;failOnlyB?:boolean;throwSink?:boolean;throwSnapshot?:boolean;throwCounter?:boolean}={}) {
+  const lines:string[]=[];const outcomes:[string,number][]=[];let queries=0,executions=0,mode:TokenMode='success';
   const authOptions=createSchemaOptions(memoryAdapter({}));
   const tokenAuth=betterAuth({...authOptions,baseURL:origin,plugins:[{id:'telemetry-token-fixture',endpoints:{
+    syntheticRevoke:createAuthEndpoint('/oauth2/revoke',{method:'POST',metadata:{allowedMediaTypes:['application/x-www-form-urlencoded']}},async()=>new Response(null,{status:200})),
     syntheticToken:createAuthEndpoint('/oauth2/token',{method:'POST',metadata:{allowedMediaTypes:['application/x-www-form-urlencoded']}},async()=>{
       if(mode==='failure')throw new Error(sentinel,{cause:{password:sentinel}});
       if(mode==='unauthorized')throw new APIError('UNAUTHORIZED',{error:'invalid_token'},{'WWW-Authenticate':'Bearer error="invalid_token"'});
@@ -71,13 +73,17 @@ function fixture(options:{failure?:PrincipalRead;failOnlyB?:boolean;throwSink?:b
     await authority.assertActiveGrant(principal);
     return Response.json({account:principal.accountId,isError:true,fixture:'HTTP success does not claim tool success'});
   });
-  const router=createRuntimeRouter(config,{auth:tokenAuth,ui:async()=>new Response('synthetic-ui'),mcp});
+  const unusedPool={connect:()=>{throw new Error('UNEXPECTED_REFRESH_FIXTURE_LOCK');}};
+  const auth={handler:createRefreshHandler(unusedPool,request=>tokenAuth.handler(request))};
+  const router=createRuntimeRouter(config,{auth,ui:async()=>new Response('synthetic-ui'),mcp});
   const deployment=createDeployment({environment:()=>env,diagnostics:{sink:line=>{
     lines.push(line);if(options.throwSink)throw new Error(sentinel);
-  }},load:async()=>({fetch:router,checkDatabase:async()=>{},poolCounts:()=>{
+  }},load:async()=>({fetch:router,checkDatabase:async()=>{},recordOAuthOutcome:async(operation,status)=>{
+    outcomes.push([operation,status]);if(options.throwCounter)throw new Error(sentinel);
+  },poolCounts:()=>{
     if(options.throwSnapshot)throw new Error(sentinel);return {total:3,idle:1,waiting:2};
   }})});
-  return {deployment,lines,counts:()=>({queries,executions}),setTokenMode:(value:TokenMode)=>{mode=value;}};
+  return {deployment,lines,outcomes,counts:()=>({queries,executions}),setTokenMode:(value:TokenMode)=>{mode=value;}};
 }
 function records(lines:string[]) {
   for(const line of lines){
@@ -157,6 +163,31 @@ test('instrumented deployment/runtime/maintained auth boundaries preserve behavi
       assert.equal(response.headers.get('cache-control'),'no-store');
     }
     const r=records(f.lines);assert.equal(r.length,5);assert.ok(r.every(value=>value.route==='oauth_token'&&value.phase==='oauth_token'&&!Object.hasOwn(value,'principal_read')));
+  });
+  await t.test('normal router labels OAuth operations while keeping credentials out of diagnostics',async()=>{
+    const f=fixture();
+    for(const [endpoint,body,route,phase] of [
+      ['token',`grant_type=authorization_code&code=${sentinel}`,'oauth_token','oauth_code'],
+      ['token',`grant_type=refresh_token&client_id=${sentinel}`,'oauth_token','oauth_refresh'],
+      ['revoke',`token=${sentinel}`,'oauth_revoke','oauth_revoke'],
+    ] as const){
+      const request=new Request(`${issuer}/oauth2/${endpoint}`,{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded'},body});
+      assert.equal((await f.deployment.fetch(request)).status,200);
+      const record=records(f.lines).at(-1)!;
+      assert.equal(record.route,route);assert.equal(record.phase,phase);
+    }
+    assert.equal(f.lines.length,3);
+    assert.deepEqual(f.outcomes,[['revoke',200]]);
+    const broken=fixture({throwCounter:true});broken.setTokenMode('unauthorized');
+    for(const [grantType,label] of [['refresh_token','refresh'],['authorization_code','code']] as const){
+      const request=new Request(`${issuer}/oauth2/token`,{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded'},
+        body:new URLSearchParams({grant_type:grantType,client_id:sentinel})});
+      const response=await broken.deployment.fetch(request);
+      assert.equal(response.status,401);
+      assert.equal(response.headers.get('www-authenticate'),'Bearer error="invalid_token"');
+      assert.deepEqual(broken.outcomes.at(-1),[label,401]);
+    }
+    assert.equal(broken.outcomes.length,2);
   });
   await t.test('method/origin/body rejects retain existing responses and boundary phase',async()=>{
     const f=fixture();

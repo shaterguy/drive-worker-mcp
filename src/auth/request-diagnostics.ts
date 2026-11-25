@@ -1,5 +1,8 @@
-const PHASES = ['boundary','runtime_init','token_verification','principal','scope_preflight','sdk_dispatch','oauth_token'] as const;
+import type { OAuthOperation } from './oauth-outcome-counts.ts';
+
+const PHASES = ['boundary','runtime_init','token_verification','principal','scope_preflight','sdk_dispatch','oauth_token','oauth_code','oauth_refresh','oauth_revoke'] as const;
 const READS = ['tenant','google_ready','grant','consent','session'] as const;
+type DiagnosticRoute = 'mcp' | 'oauth_token' | 'oauth_revoke';
 export type DiagnosticPhase = typeof PHASES[number];
 export type PrincipalRead = typeof READS[number];
 export interface PoolCounts { total: number; idle: number; waiting: number }
@@ -12,7 +15,7 @@ const clamp = (value: number, maximum: number) => Math.min(maximum,Math.max(0,Ma
 
 /** Closed projection only. Never accepts an Error, Request, claims or arbitrary record. */
 export class RequestDiagnostics {
-  readonly #route: 'mcp' | 'oauth_token';
+  readonly #route: DiagnosticRoute;
   readonly #now: () => number;
   readonly #sink: (line: string) => unknown;
   readonly #started: number;
@@ -22,8 +25,8 @@ export class RequestDiagnostics {
   #failedRead: PrincipalRead | undefined;
   #failurePool: SafePool | undefined;
 
-  constructor(route: 'mcp' | 'oauth_token', options: DiagnosticOptions = {}) {
-    this.#route = route==='oauth_token' ? 'oauth_token' : 'mcp';
+  constructor(route: DiagnosticRoute, options: DiagnosticOptions = {}) {
+    this.#route = route==='oauth_token' || route==='oauth_revoke' ? route : 'mcp';
     this.#now = options.now ?? (() => performance.now());
     this.#sink = options.sink ?? (line => console.info(line));
     this.#started = this.#time();
@@ -50,6 +53,13 @@ export class RequestDiagnostics {
     this.#failedRead=read;
     this.#failurePool=this.#snapshot();
   }
+  oauthOperation(status: number): OAuthOperation | undefined {
+    if (!Number.isInteger(status) || status < 200 || status > 599) return;
+    if (this.#route==='oauth_revoke' && this.#phase==='oauth_revoke') return 'revoke';
+    if (this.#route!=='oauth_token' || status<400) return;
+    if (this.#phase==='oauth_code') return 'code';
+    if (this.#phase==='oauth_refresh') return 'refresh';
+  }
   finish(status: number): void {
     if (this.#finished) return;
     this.#finished=true;
@@ -72,7 +82,8 @@ export class RequestDiagnostics {
 
 export function beginRequestDiagnostics(pathname: string, options?: DiagnosticOptions): RequestDiagnostics | undefined {
   return pathname==='/mcp' ? new RequestDiagnostics('mcp',options)
-    : pathname==='/api/auth/oauth2/token' ? new RequestDiagnostics('oauth_token',options) : undefined;
+    : pathname==='/api/auth/oauth2/token' ? new RequestDiagnostics('oauth_token',options)
+    : pathname==='/api/auth/oauth2/revoke' ? new RequestDiagnostics('oauth_revoke',options) : undefined;
 }
 
 /** Failure label only; preserve the exact exception and every database/authorization operation. */

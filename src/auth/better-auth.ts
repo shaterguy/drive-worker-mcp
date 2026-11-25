@@ -75,7 +75,9 @@ export function createAuthOptions(config: AuthConfig, database: NonNullable<Bett
         storeTokens: 'hashed',
         // Recover duplicate refreshes/lost responses without minting another token pair.
         refreshTokenReuseInterval: 30,
-        accessTokenExpiresIn: 300,
+        // Give clients using early renewal enough time to reuse a signed access token.
+        // Each protected request still checks the current grant and consent in Postgres.
+        accessTokenExpiresIn: 30 * 60,
         // Rotated from the current time on every refresh, not from browser sign-in.
         refreshTokenExpiresIn: 90 * 24 * 60 * 60,
         codeExpiresIn: 120,

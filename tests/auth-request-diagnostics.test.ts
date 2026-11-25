@@ -8,11 +8,11 @@ function fixture(path='/mcp') {
   const trace=beginRequestDiagnostics(path,{now:()=>time,sink:line=>{lines.push(line);}});
   return {trace,lines,advance:(value:number)=>{time=value;}};
 }
-test('diagnostics are created only for the two exact route paths',()=>{
-  for(const path of ['/health','/api/auth/jwks','/sign-in','/connect','/ui/connect','/api/auth/get-access-token','/mcp/','/mcp?private','/api/auth/oauth2/token/']){
+test('diagnostics are created only for the exact MCP, token and revocation paths',()=>{
+  for(const path of ['/health','/api/auth/jwks','/sign-in','/connect','/ui/connect','/api/auth/get-access-token','/mcp/','/mcp?private','/api/auth/oauth2/token/','/api/auth/oauth2/revoke/']){
     const f=fixture(path);assert.equal(f.trace,undefined);assert.equal(f.lines.length,0);
   }
-  for(const [path,route] of [['/mcp','mcp'],['/api/auth/oauth2/token','oauth_token']] as const){
+  for(const [path,route] of [['/mcp','mcp'],['/api/auth/oauth2/token','oauth_token'],['/api/auth/oauth2/revoke','oauth_revoke']] as const){
     const f=fixture(path);assert.ok(f.trace);f.trace.finish(200);assert.equal(JSON.parse(f.lines[0]!).route,route);
   }
 });

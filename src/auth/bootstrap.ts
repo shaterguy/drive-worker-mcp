@@ -1,3 +1,4 @@
+import { createOAuthOutcomeWriter } from './oauth-outcome-counts.ts';
 import { Pool } from 'pg';
 import type { AuthConfig } from './config.ts';
 import { AuthBoundaryError } from './config.ts';
@@ -32,6 +33,7 @@ export async function loadRuntime(config: AuthConfig): Promise<MountedRuntime> {
     const runtime = createRuntime(config, pool, deriveCursorKey(config));
     await awaitAuthContext(runtime.auth.$context);
     return { fetch: (request,diagnostic) => runtime.fetch(request,diagnostic), checkDatabase: () => assertSchemaPresent(pool),
+      recordOAuthOutcome: createOAuthOutcomeWriter(pool),
       poolCounts: () => ({total:pool.totalCount,idle:pool.idleCount,waiting:pool.waitingCount}) };
   } catch {
     await pool.end().catch(() => { /* Code-only failure above; never log a DB URL. */ });

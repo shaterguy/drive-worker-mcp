@@ -1,4 +1,4 @@
-# Refresh recovery in v0.1.0-dev6
+# Refresh recovery
 
 MCP refresh requests for the same token are ordered with a PostgreSQL transaction advisory lock. This closes the provider's gap between consuming a refresh token and saving its encrypted replay response, including across Vercel instances. A bounded per-runtime queue reserves at most one of the three pool connections; other connections remain available to the maintained auth handler. Queue/lock wait is limited to five seconds before entering the handler. An expired wait fails with the existing sanitized AUTH_UNAVAILABLE response rather than invoking an old refresh after the overlap window.
 
@@ -9,6 +9,14 @@ The maintained Better Auth provider now permits an exact duplicate refresh for 3
 In-process caching alone would not cover different instances; a grace interval alone leaves a simultaneous CAS-loser gap. The combination uses the existing PostgreSQL store and provider rather than implementing another token issuer. The PostgreSQL lock cannot survive a lost database connection; the handler detects loss and withholds success, and the maintained overlap remains the recovery path for a response lost after minting.
 
 Verification uses synthetic provider credentials and separate lock fixtures; production tokens are never exported or replayed for a test. Existing connected-job reads verify the deployed user path. See the test files for the exact covered behavior and the deployment commit for source identity.
+
+## Access-token reuse and revocation processing
+
+Access tokens issued by the MCP service expire after 30 minutes. Each MCP request and tool invocation checks current authorization in PostgreSQL. A revoked grant therefore takes effect on the next check even with time left on a signed token.
+
+For existing databases, apply `sql/migrations/20261125_refresh_delete.sql`. The deletion trigger groups unexpired refresh rows by user, client and consent reference within the transaction. It marks each affected grant once and preserves the original revocation time. Fresh installations get the same trigger from `sql/auth.sql`.
+
+Apply `sql/oauth-outcome-counts.sql` to enable the `dw_mcp_oauth_recent_counts` view. It shows up to 720 hours of counts grouped by UTC hour, OAuth operation and HTTP status. It includes failed code exchanges, failed refreshes and revocation responses. Multiple requests can share a bucket. The recorder can skip events under database contention.
 
 ## Durable offline access
 

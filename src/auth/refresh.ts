@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import type { RequestDiagnostics } from './request-diagnostics.ts';
 import type { Pool } from 'pg';
 import { AuthBoundaryError } from './config.ts';
 
@@ -26,13 +27,17 @@ export function createRefreshHandler(pool:Pick<Pool,'connect'>,handle:(request:R
     if(next){clearTimeout(next.timer);next.resolve();}
     else active=false;
   };
-  return async(request:Request):Promise<Response>=>{
+  return async(request:Request, diagnostic?:RequestDiagnostics):Promise<Response>=>{
     if(request.method!=='POST'||new URL(request.url).pathname!=='/api/auth/oauth2/token'||
       request.headers.get('content-type')?.split(';')[0]?.trim().toLowerCase()!=='application/x-www-form-urlencoded')return handle(request);
     const form=new URLSearchParams(await request.clone().text());
     // Match the provider's last-value form decoding and trimmed grant type.
+    const grantType=form.getAll('grant_type').at(-1)?.trim();
+    if(grantType==='authorization_code')diagnostic?.markPhase('oauth_code');
+    if(grantType!=='refresh_token')return handle(request);
+    diagnostic?.markPhase('oauth_refresh');
     const token=form.getAll('refresh_token').at(-1);
-    if(form.getAll('grant_type').at(-1)?.trim()!=='refresh_token'||!token)return handle(request);
+    if(!token)return handle(request);
     // Raw tokens never reach SQL, logs, or a cross-request cache.
     const key=createHash('sha256').update('dwmcp-refresh-v1\0').update(token).digest().readBigInt64BE().toString();
     const deadline=performance.now()+WAIT_MILLIS;
